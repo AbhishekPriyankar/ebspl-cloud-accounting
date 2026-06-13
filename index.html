@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EBSPL Cloud Accounting — UI Prototypes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #ec5b13;
+      --primary-dark: #d44d0d;
+      --primary-light: #fdf0ea;
+      --surface: #f1fbff;
+      --surface-alt: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-hover: 0 4px 12px rgba(236,91,19,0.15), 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--surface);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--primary);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.5px;
+    }
+    .logo-text {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--text);
+    }
+    .logo-text span { color: var(--primary); }
+    .header-badge {
+      margin-left: auto;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 48px 32px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stat-icon {
+      width: 36px; height: 36px;
+      background: var(--primary-light);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary);
+      font-size: 18px;
+    }
+    .stat-num {
+      font-family: 'Manrope', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Featured */
+    .featured-banner {
+      max-width: 1200px;
+      margin: 0 auto 8px;
+      padding: 0 32px;
+    }
+    .featured-card {
+      background: linear-gradient(135deg, #1e1040 0%, #2d0d76 60%, #3d1a8f 100%);
+      border-radius: 16px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: rgba(236,91,19,0.15);
+      border-radius: 50%;
+    }
+    .featured-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(45,13,118,0.4); }
+    .featured-icon {
+      width: 56px; height: 56px;
+      background: rgba(236,91,19,0.2);
+      border: 2px solid rgba(236,91,19,0.4);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: #ec5b13;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+    .featured-text h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 4px;
+    }
+    .featured-text p { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.5; }
+    .featured-pill {
+      margin-left: auto;
+      background: var(--primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    /* Grid sections */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 32px;
+    }
+    .section-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    /* Module card */
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(236,91,19,0.3);
+    }
+    .card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .card-body h3 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .card-body p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .card-arrow {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      gap: 4px;
+    }
+
+    /* Color themes for icon backgrounds */
+    .ic-orange  { background: #fdf0ea; color: #ec5b13; }
+    .ic-purple  { background: #ede9fe; color: #7c3aed; }
+    .ic-blue    { background: #eff6ff; color: #2563eb; }
+    .ic-green   { background: #f0fdf4; color: #16a34a; }
+    .ic-teal    { background: #f0fdfa; color: #0d9488; }
+    .ic-amber   { background: #fffbeb; color: #d97706; }
+    .ic-red     { background: #fef2f2; color: #dc2626; }
+    .ic-indigo  { background: #eef2ff; color: #4f46e5; }
+    .ic-pink    { background: #fdf2f8; color: #db2777; }
+    .ic-slate   { background: #f8fafc; color: #475569; }
+
+    .warn-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: #fef9c3;
+      color: #854d0e;
+      border: 1px solid #fde047;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-mark">E</div>
+    <div class="logo-text">EBSPL <span>Cloud</span></div>
+    <div class="header-badge">UI Prototype Hub</div>
+  </header>
+
+  <div class="hero">
+    <h1>EBSPL Cloud Accounting — Prototype Library</h1>
+    <p>Explore all screens and modules for the EBSPL Cloud Accounting Platform. Click any card to open the live prototype.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-icon"><span class="material-symbols-outlined">layers</span></div>
+        <div>
+          <div class="stat-num">19</div>
+          <div class="stat-label">Screens</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon"><span class="material-symbols-outlined">palette</span></div>
+        <div>
+          <div class="stat-num">1</div>
+          <div class="stat-label">Design System</div>
+        </div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon"><span class="material-symbols-outlined">bolt</span></div>
+        <div>
+          <div class="stat-num">React 18</div>
+          <div class="stat-label">+ Tailwind CSS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured: Enterprise Dashboard -->
+  <div class="featured-banner">
+    <a class="featured-card" href="ebspl_cloud_accounting_enterprise_dashboard/code.html">
+      <div class="featured-icon"><span class="material-symbols-outlined">dashboard</span></div>
+      <div class="featured-text">
+        <h2>Enterprise Dashboard — Full SPA</h2>
+        <p>Sign in with Google or email, then access the full dashboard — invoices, clients, expenses, reconciliation and more. Login and app are one seamless page.</p>
+      </div>
+      <div class="featured-pill">
+        <span class="material-symbols-outlined" style="font-size:14px">login</span>
+        Sign In
+      </div>
+    </a>
+  </div>
+
+  <!-- Authentication -->
+  <div class="section">
+    <div class="section-title">Authentication</div>
+    <div class="grid">
+      <a class="card" href="login_ebspl_2/code.html" onclick="localStorage.removeItem('ebspl_user')">
+        <div class="card-icon ic-orange"><span class="material-symbols-outlined">lock</span></div>
+        <div class="card-body">
+          <h3>Login</h3>
+          <p>Sign in with Google, SSO, or email — dashboard loads with no redirect.</p>
+        </div>
+        <div class="card-arrow">Sign in <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="register_ebspl/code.html">
+        <div class="card-icon ic-purple"><span class="material-symbols-outlined">person_add</span></div>
+        <div class="card-body">
+          <h3>Register</h3>
+          <p>New account registration with company and user details.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Dashboards -->
+  <div class="section">
+    <div class="section-title">Dashboards</div>
+    <div class="grid">
+      <a class="card" href="dashboard_ebspl_1/code.html">
+        <div class="card-icon ic-blue"><span class="material-symbols-outlined">bar_chart</span></div>
+        <div class="card-body">
+          <h3>Dashboard — Variant 1</h3>
+          <p>Overview dashboard with KPI cards and activity feed.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Financial Management -->
+  <div class="section">
+    <div class="section-title">Financial Management</div>
+    <div class="grid">
+      <a class="card" href="ebspl_financial_management_suite/code.html">
+        <div class="card-icon ic-green"><span class="material-symbols-outlined">account_balance</span></div>
+        <div class="card-body">
+          <h3>Financial Management Suite</h3>
+          <p>Comprehensive suite covering P&L, balance sheet and cash flow.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="invoicing_billing_ebspl/code.html">
+        <div class="card-icon ic-orange"><span class="material-symbols-outlined">receipt_long</span></div>
+        <div class="card-body">
+          <h3>Invoicing &amp; Billing</h3>
+          <p>Create, send and track invoices with payment status.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="expenses_payables_ebspl/code.html">
+        <div class="card-icon ic-amber"><span class="material-symbols-outlined">payments</span></div>
+        <div class="card-body">
+          <h3>Expenses &amp; Payables</h3>
+          <p>Manage outgoing payments, expense categories and approvals.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="bank_reconciliation_ebspl/code.html">
+        <div class="card-icon ic-teal"><span class="material-symbols-outlined">compare_arrows</span></div>
+        <div class="card-body">
+          <h3>Bank Reconciliation</h3>
+          <p>Match transactions between bank feeds and ledger records.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="financial_statements_ebspl/code.html">
+        <div class="card-icon ic-indigo"><span class="material-symbols-outlined">description</span></div>
+        <div class="card-body">
+          <h3>Financial Statements</h3>
+          <p>Formal P&L, balance sheet and cash flow statements.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="tax_compliance_ebspl/code.html">
+        <div class="card-icon ic-red"><span class="material-symbols-outlined">gavel</span></div>
+        <div class="card-body">
+          <h3>Tax Compliance</h3>
+          <p>VAT returns, tax schedules and compliance tracking.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="reports_ebspl/code.html">
+        <div class="card-icon ic-purple"><span class="material-symbols-outlined">analytics</span></div>
+        <div class="card-body">
+          <h3>Reports</h3>
+          <p>Customisable financial and operational reporting centre.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Clients & People -->
+  <div class="section">
+    <div class="section-title">Clients &amp; People</div>
+    <div class="grid">
+      <a class="card" href="clients_contacts_ebspl/code.html">
+        <div class="card-icon ic-pink"><span class="material-symbols-outlined">contacts</span></div>
+        <div class="card-body">
+          <h3>Clients &amp; Contacts</h3>
+          <p>Directory of clients and contacts with profile pages.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="client_onboarding_ebspl/code.html">
+        <div class="card-icon ic-green"><span class="material-symbols-outlined">how_to_reg</span></div>
+        <div class="card-body">
+          <h3>Client Onboarding</h3>
+          <p>Step-by-step wizard to onboard new clients to the platform.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="team_onboarding_ebspl/code.html">
+        <div class="card-icon ic-teal"><span class="material-symbols-outlined">group_add</span></div>
+        <div class="card-body">
+          <h3>Team Onboarding</h3>
+          <p>Invite and set up team members with role assignments.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Operations -->
+  <div class="section">
+    <div class="section-title">Operations</div>
+    <div class="grid">
+      <a class="card" href="uploads_documents_ebspl/code.html">
+        <div class="card-icon ic-slate"><span class="material-symbols-outlined">upload_file</span></div>
+        <div class="card-body">
+          <h3>Uploads &amp; Documents</h3>
+          <p>Document vault with upload, tagging and search functionality.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="chat_support_ebspl_2/code.html">
+        <div class="card-icon ic-blue"><span class="material-symbols-outlined">chat</span></div>
+        <div class="card-body">
+          <h3>Chat &amp; Support</h3>
+          <p>In-app messaging and support ticket interface.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+      <a class="card" href="settings_ebspl/code.html">
+        <div class="card-icon ic-slate"><span class="material-symbols-outlined">settings</span></div>
+        <div class="card-body">
+          <h3>Settings</h3>
+          <p>Account, billing, integrations and notification preferences.</p>
+        </div>
+        <div class="card-arrow">Open prototype <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Design System -->
+  <div class="section">
+    <div class="section-title">Design Resources</div>
+    <div class="grid">
+      <a class="card" href="ebspl_design_system/DESIGN.md">
+        <div class="card-icon ic-purple"><span class="material-symbols-outlined">design_services</span></div>
+        <div class="card-body">
+          <h3>Design System Spec</h3>
+          <p>Colour palette, typography, grid system, and component guidelines.</p>
+        </div>
+        <div class="card-arrow">Open spec <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span></div>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    EBSPL Cloud Accounting Platform &mdash; UI Prototype Library &mdash; Served locally via Python http.server
+  </footer>
+
+  <!-- Session status bar -->
+  <div id="session-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1e293b;color:#f8fafc;padding:10px 24px;font-family:Inter,sans-serif;font-size:13px;display:flex;align-items:center;gap:12px;z-index:9999;border-top:2px solid #ec5b13;">
+    <div id="session-avatar" style="width:28px;height:28px;border-radius:50%;background:#ec5b13;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;"></div>
+    <div><strong id="session-name"></strong> <span style="opacity:.6;font-size:11px;" id="session-role"></span></div>
+    <div style="flex:1"></div>
+    <span style="opacity:.5;font-size:11px;">Active session</span>
+    <button onclick="localStorage.removeItem('ebspl_user');window.location.reload();" style="background:#ef4444;border:none;color:#fff;padding:6px 14px;border-radius:6px;font-weight:700;font-size:12px;cursor:pointer;margin-left:8px;">Sign Out</button>
+  </div>
+  <div id="no-session-note" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0f172a;color:#94a3b8;padding:8px 24px;font-family:Inter,sans-serif;font-size:12px;text-align:center;z-index:9999;">
+    No active session &mdash; click <strong style="color:#f8fafc;">Login</strong> below to sign in
+  </div>
+
+  <script>
+    (function() {
+      try {
+        var u = JSON.parse(localStorage.getItem('ebspl_user'));
+        if (u && u.name) {
+          var bar = document.getElementById('session-bar');
+          document.getElementById('session-name').textContent = u.name;
+          document.getElementById('session-role').textContent = u.role ? '· ' + u.role : '';
+          document.getElementById('session-avatar').textContent = u.initial || u.name.split(' ').map(function(w){return w[0];}).join('').toUpperCase().slice(0,2);
+          bar.style.display = 'flex';
+        } else {
+          document.getElementById('no-session-note').style.display = 'block';
+        }
+      } catch(e) {}
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,396 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-container": "#b09aff",
+            "surface-container-highest": "#d9e4e9",
+            "inverse-surface": "#283236",
+            "inverse-on-surface": "#e7f3f7",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#004738",
+            "surface-variant": "#d9e4e9",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#1f005f",
+            "background": "#f1fbff",
+            "primary": "#2d0d76",
+            "on-secondary-fixed": "#160066",
+            "inverse-primary": "#ccbdff",
+            "on-tertiary-fixed": "#002018",
+            "tertiary": "#002f24",
+            "surface": "#f1fbff",
+            "on-secondary-fixed-variant": "#4029ba",
+            "tertiary-fixed-dim": "#4bddb7",
+            "on-surface-variant": "#484551",
+            "surface-container-high": "#dfeaef",
+            "surface-container-low": "#eaf5fa",
+            "on-background": "#131d21",
+            "secondary-fixed": "#e4dfff",
+            "on-error-container": "#93000a",
+            "on-secondary-container": "#fffbff",
+            "secondary": "#5644d0",
+            "tertiary-fixed": "#6dfad2",
+            "on-tertiary-container": "#19bf9a",
+            "outline-variant": "#cac4d3",
+            "on-secondary": "#ffffff",
+            "surface-dim": "#d1dce0",
+            "secondary-fixed-dim": "#c6bfff",
+            "surface-bright": "#f1fbff",
+            "on-surface": "#131d21",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#4c3595",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed": "#e7deff",
+            "primary-fixed-dim": "#ccbdff",
+            "on-tertiary-fixed-variant": "#005140",
+            "on-primary": "#ffffff",
+            "primary-container": "#432b8c",
+            "outline": "#797583",
+            "surface-tint": "#644eaf",
+            "secondary-container": "#6f5fea",
+            "surface-container": "#e4f0f4"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "unit": "4px",
+            "stack-sm": "8px",
+            "stack-lg": "24px",
+            "gutter": "16px",
+            "container-padding": "24px",
+            "stack-md": "16px"
+          },
+          "fontFamily": {
+            "title-sm": ["Manrope"],
+            "display-lg": ["Manrope"],
+            "headline-md": ["Manrope"],
+            "data-mono": ["Inter"],
+            "label-bold": ["Inter"],
+            "body-md": ["Inter"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      background-color: #f1fbff;
+      font-family: 'Inter', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cac4d3;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body data-require-auth class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="docked left-0 h-full w-64 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-6 px-4 gap-2 shrink-0">
+<div class="mb-8 px-2 flex flex-col gap-1">
+<div class="text-headline-md font-headline-md font-bold text-primary">EBSPL</div>
+<div class="text-label-bold font-label-bold text-on-surface-variant">Cloud Accounting</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="text-body-md font-body-md">Clients &amp; Contacts</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="text-body-md font-body-md">Invoicing &amp; Billing</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-body-md font-body-md">Expenses &amp; Payables</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span class="text-body-md font-body-md">Bank Reconciliation</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="text-body-md font-body-md">Financial Statements</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-body-md font-body-md">Tax &amp; Compliance</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="cloud_upload">cloud_upload</span>
+<span class="text-body-md font-body-md">Uploads &amp; Documents</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-body-md font-body-md">Reports</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</div>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4 flex flex-col gap-2">
+<div class="bg-primary text-on-primary rounded-lg font-bold flex items-center gap-3 px-3 py-2 active:scale-[0.98] transition-all duration-150 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="text-body-md font-body-md">Chat &amp; Support</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-primary font-bold transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-body-md">EBSPL Support</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrap -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="h-16 w-full bg-surface flex items-center justify-between px-container-padding shrink-0">
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<div class="flex items-center gap-4 bg-surface-container-low rounded-full px-4 py-2 w-96">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full" placeholder="Search transactions or support..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-10 w-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="John Smith" data-alt="A professional headshot of a senior accountant in a clean, modern studio setting. The lighting is soft and corporate, utilizing a bright high-key background that aligns with a professional light-mode UI. The subject wears a charcoal suit, projecting trust and financial expertise through a friendly, confident expression. The overall aesthetic is minimalist and high-quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV36ULam-AhqRf010uE9DkpFzy5MpUO-tcnnB66OGWQeq0YzyRCf75vqlvo8vxvIy9tijsj31J3YBZDmItVLDlRN1o2lz2mPwayUmFxoBzf0w2gF7A0MtP5L9aIKZd5Ea33x5VH0epQU63G_CTaPBcjgH-ccpRaA4f6NxAg-SNaB4gQB2coAhmM-Vu08vOm5QJvUukQUMCZENpc_o0qmkTh8Y0MgRtold6CiFhDA97vUepmqy5xU-aQFkm_rEp5luM2DCAAw8gFu8"/>
+</div>
+</div>
+</header>
+<!-- Content Area: Three Columns -->
+<main class="flex-1 flex overflow-hidden p-6 gap-6">
+<!-- Column 1: Conversations List -->
+<section class="w-80 flex flex-col gap-4 shrink-0">
+<div class="flex items-center justify-between">
+<h1 class="text-headline-md font-headline-md text-primary">Chat &amp; Support</h1>
+<button class="bg-primary text-on-primary w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+</button>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col border border-outline-variant">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low">
+<h2 class="text-label-bold font-label-bold text-on-surface-variant">MY CONVERSATIONS</h2>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Active Ticket -->
+<div class="p-4 border-b border-outline-variant bg-primary-fixed cursor-pointer transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="text-label-bold text-primary">#TKT-8842</span>
+<span class="px-2 py-0.5 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold rounded-full uppercase">In Progress</span>
+</div>
+<p class="text-title-sm font-title-sm text-on-background line-clamp-1">Reconciling bank data</p>
+<p class="text-body-sm text-on-surface-variant mt-1">Last active: 2m ago</p>
+</div>
+<!-- Open Ticket -->
+<div class="p-4 border-b border-outline-variant hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="text-label-bold text-outline">#TKT-8839</span>
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded-full uppercase">Open</span>
+</div>
+<p class="text-title-sm font-title-sm text-on-background line-clamp-1">Automated invoice setup</p>
+<p class="text-body-sm text-on-surface-variant mt-1">Last active: 4h ago</p>
+</div>
+<!-- Resolved Ticket -->
+<div class="p-4 border-b border-outline-variant hover:bg-surface-container-high cursor-pointer transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="text-label-bold text-outline">#TKT-8812</span>
+<span class="px-2 py-0.5 bg-surface-container-highest text-outline text-[10px] font-bold rounded-full uppercase">Resolved</span>
+</div>
+<p class="text-title-sm font-title-sm text-on-surface-variant line-clamp-1">VAT Filing question</p>
+<p class="text-body-sm text-outline mt-1">Last active: 2d ago</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Column 2: Active Chat Interface -->
+<section class="flex-1 flex flex-col bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden min-w-0">
+<!-- Chat Header -->
+<header class="px-6 py-4 border-b border-outline-variant flex items-center justify-between bg-white shrink-0">
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<div class="flex items-center gap-3">
+<div class="relative">
+<img alt="Sarah" class="w-10 h-10 rounded-full object-cover border-2 border-tertiary-fixed" data-alt="A portrait of a professional female customer support specialist with a warm, empathetic smile. She is in a high-tech, modern office with soft purple ambient lighting that reflects the brand identity of EBSPL. The background is softly blurred to focus on her professionalism and approachable demeanor. High-key lighting ensures a clean, crisp, light-mode look for the interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOdBeMG73CXNibPW1ib271DOgPKmaPlyodhJOuMzToRZLogwAx_x7KRSlR8SbBwh3RtWMw_biI37mSu6lL9FtXm98XwOR4U06QGm2eagJg80F-0A1_mWX6mJ-t1Gv_vQOQSRUSpqfNoIRThWEVzImluhfOI464bFrusECGDm-MRoJmJy9a0_IQ8cOga-3evWR-K6FnTkyuj9bhBw-E9H42Ccynt75rbBcPP47Sx45kwsLTh0qVSGk_6oBaj4ZhudSPywuGTedFfUw"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-tertiary-fixed border-2 border-white rounded-full"></span>
+</div>
+<div>
+<h3 class="text-title-sm font-title-sm text-on-surface">Sarah</h3>
+<p class="text-body-sm text-on-surface-variant">Senior Accounting Support</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-primary hover:bg-primary-fixed transition-all">
+<span class="material-symbols-outlined" data-icon="videocam">videocam</span>
+</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-primary hover:bg-primary-fixed transition-all">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Chat Body -->
+<div class="flex-1 overflow-y-auto p-6 flex flex-col gap-6 custom-scrollbar bg-[#FAFBFF]">
+<!-- System Message -->
+<div class="flex justify-center">
+<span class="text-[11px] font-label-bold text-outline bg-surface-container-high px-3 py-1 rounded-full uppercase">Today, 10:42 AM</span>
+</div>
+<!-- User Message -->
+<div class="flex flex-col items-end gap-1 max-w-[80%] self-end">
+<div class="bg-primary text-on-primary p-4 rounded-2xl rounded-tr-none text-body-md shadow-sm">
+              Hello Sarah, I'm having trouble matching my bank statement from last Tuesday. It seems to show a double entry but only one transaction in my bank.
+            </div>
+<div class="flex items-center gap-1">
+<span class="text-[11px] text-outline">10:45 AM</span>
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="done_all" data-weight="fill">done_all</span>
+</div>
+</div>
+<!-- Specialist Message -->
+<div class="flex gap-3 max-w-[80%]">
+<img alt="Sarah" class="w-8 h-8 rounded-full mt-1" data-alt="A portrait of a professional female customer support specialist with a warm, empathetic smile. She is in a high-tech, modern office with soft purple ambient lighting that reflects the brand identity of EBSPL. The background is softly blurred to focus on her professionalism and approachable demeanor. High-key lighting ensures a clean, crisp, light-mode look for the interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoN2UFE94riGkz2ztQX093yMyYKqe7rcld5pdm06UsL_hWUasZatrmEsYQsBHFNHlQ_07L8dS2D-pVlZJBYEPmy_M3i2i7u8fId7Og9BGJnkwDEp_9eiXJ90TU5vBdk2QL7Ij7brwqe7LYfCsU3gWJiq3_JDorQxXz9nX6xmp1z6owRkLKqqSSwYTQI52Jw8NzMfV9B_TmvCmsSiUwRAI_aM25HT4NH_2QIxdhY-tQHanwBOsQQsFwhPvQjheq1i-OE-g1cWvkMv8"/>
+<div class="flex flex-col gap-1">
+<div class="bg-surface-container-high text-on-surface p-4 rounded-2xl rounded-tl-none text-body-md shadow-sm">
+                Hi! I'd be happy to help you with that. Let me take a look at your recent reconciliation logs. One moment please...
+              </div>
+<span class="text-[11px] text-outline">10:47 AM</span>
+</div>
+</div>
+<!-- Specialist Message -->
+<div class="flex gap-3 max-w-[80%]">
+<img alt="Sarah" class="w-8 h-8 rounded-full mt-1" data-alt="A portrait of a professional female customer support specialist with a warm, empathetic smile. She is in a high-tech, modern office with soft purple ambient lighting that reflects the brand identity of EBSPL. The background is softly blurred to focus on her professionalism and approachable demeanor. High-key lighting ensures a clean, crisp, light-mode look for the interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0dTM_OuXwIPyKhbGdquEbIq_yFfLhWyq52x8j3bb86z_ldm_ddXn2ZKwfEdUYNgFg_pesG8iLJT70aPoJVf1hgoOPqQySpE8SQEunuWJdhcaTF044KrYbxMtvPrPgLotRx4SDdh3cFtWMN6QZUJfpLyLN6wwVwmtoKyGdut0uU6jeH4dK49od0VcPR_Y1l4sTxeQ1sXickBmlI6OZpb3V4K-9twWZc-2w6VmK_UNG0aVpIsbEvuRPiZvVEzBz9HLtwl0rJ0P0Q9c"/>
+<div class="flex flex-col gap-1">
+<div class="bg-surface-container-high text-on-surface p-4 rounded-2xl rounded-tl-none text-body-md shadow-sm">
+                I see it now. It looks like a duplicate rule was triggered during the auto-import. Would you like me to merge these for you, or shall I walk you through how to delete the duplicate?
+              </div>
+<span class="text-[11px] text-outline">10:48 AM</span>
+</div>
+</div>
+<!-- Typing Indicator -->
+<div class="flex gap-3 items-center">
+<div class="flex gap-1">
+<span class="w-1.5 h-1.5 bg-outline rounded-full opacity-40 animate-pulse"></span>
+<span class="w-1.5 h-1.5 bg-outline rounded-full opacity-60 animate-pulse"></span>
+<span class="w-1.5 h-1.5 bg-outline rounded-full opacity-80 animate-pulse"></span>
+</div>
+<span class="text-body-sm text-outline">Sarah is typing...</span>
+</div>
+</div>
+<!-- Message Input -->
+<footer class="p-4 border-t border-outline-variant bg-white shrink-0">
+<div class="flex items-end gap-3 bg-surface-container-low rounded-xl p-3 border border-outline-variant focus-within:ring-2 focus-within:ring-primary focus-within:ring-opacity-20 transition-all">
+<button class="text-on-surface-variant hover:text-primary p-1">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</button>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 text-body-md resize-none py-1 h-10 max-h-32" placeholder="Type your message here..." rows="1"></textarea>
+<div class="flex items-center gap-1">
+<button class="text-on-surface-variant hover:text-primary p-1">
+<span class="material-symbols-outlined" data-icon="mood">mood</span>
+</button>
+<button class="bg-primary text-on-primary p-2 rounded-lg hover:brightness-110 shadow-md">
+<span class="material-symbols-outlined" data-icon="send" data-weight="fill">send</span>
+</button>
+</div>
+</div>
+</footer>
+</section>
+<!-- Column 3: Quick Help & Knowledge Base -->
+<section class="w-80 flex flex-col gap-6 shrink-0">
+<!-- Search Help -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm">
+<h2 class="text-title-sm font-title-sm text-on-surface mb-4">Quick Help Center</h2>
+<div class="relative">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 pl-10 text-body-md focus:ring-2 focus:ring-primary/20" placeholder="Search articles..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]" data-icon="search">search</span>
+</div>
+</div>
+<!-- Top Articles -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm flex flex-col overflow-hidden">
+<div class="p-4 border-b border-outline-variant">
+<h3 class="text-label-bold font-label-bold text-on-surface-variant">TOP ARTICLES</h3>
+</div>
+<div class="flex flex-col">
+<a class="p-4 hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance">account_balance</span>
+<span class="text-body-md font-medium text-on-surface">How to reconcile bank statements</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="p-4 border-t border-outline-variant hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-body-md font-medium text-on-surface">Setting up automated invoicing</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="p-4 border-t border-outline-variant hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="cloud_upload">cloud_upload</span>
+<span class="text-body-md font-medium text-on-surface">Bulk upload your receipts</span>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+<div class="p-3 bg-surface-container-low text-center">
+<button class="text-primary text-label-bold hover:underline">VIEW ALL GUIDES</button>
+</div>
+</div>
+<!-- System Status -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant shadow-sm mt-auto">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-label-bold font-label-bold text-on-surface-variant">SYSTEM STATUS</h3>
+<span class="w-2 h-2 bg-tertiary-fixed rounded-full animate-pulse"></span>
+</div>
+<div class="flex items-center gap-3 text-tertiary font-bold mb-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span class="text-body-md">All systems operational</span>
+</div>
+<p class="text-body-sm text-outline">Last checked: 10:52 AM. No reported outages in the last 24 hours.</p>
+</div>
+</section>
+</main>
+</div>
+<script src="../profiles.js"></script>
+<script src="../auth.js"></script></body></html>

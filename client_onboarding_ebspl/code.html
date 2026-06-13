@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#e7f3f7",
+                    "secondary": "#5644d0",
+                    "primary-fixed": "#e7deff",
+                    "inverse-primary": "#ccbdff",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#6dfad2",
+                    "outline": "#797583",
+                    "secondary-container": "#6f5fea",
+                    "on-background": "#131d21",
+                    "tertiary-fixed-dim": "#4bddb7",
+                    "outline-variant": "#cac4d3",
+                    "surface-dim": "#d1dce0",
+                    "on-secondary-fixed-variant": "#4029ba",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#19bf9a",
+                    "on-surface": "#131d21",
+                    "surface-container": "#e4f0f4",
+                    "surface": "#f1fbff",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d9e4e9",
+                    "surface-container-low": "#eaf5fa",
+                    "on-error": "#ffffff",
+                    "error": "#ba1a1a",
+                    "primary": "#2d0d76",
+                    "tertiary": "#002f24",
+                    "on-secondary-container": "#fffbff",
+                    "on-tertiary-fixed": "#002018",
+                    "on-primary-fixed-variant": "#4c3595",
+                    "secondary-fixed": "#e4dfff",
+                    "on-primary-fixed": "#1f005f",
+                    "on-tertiary-fixed-variant": "#005140",
+                    "secondary-fixed-dim": "#c6bfff",
+                    "tertiary-container": "#004738",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#ccbdff",
+                    "surface-container-high": "#dfeaef",
+                    "surface-tint": "#644eaf",
+                    "surface-bright": "#f1fbff",
+                    "error-container": "#ffdad6",
+                    "background": "#f1fbff",
+                    "primary-container": "#432b8c",
+                    "on-primary-container": "#b09aff",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#484551",
+                    "inverse-surface": "#283236",
+                    "on-secondary-fixed": "#160066",
+                    "surface-container-highest": "#d9e4e9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "8px",
+                    "stack-lg": "24px",
+                    "container-padding": "24px",
+                    "stack-md": "16px",
+                    "unit": "4px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "title-sm": ["Manrope"],
+                    "label-bold": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { background-color: #f1fbff; }
+        .custom-shadow { shadow-sm: 0px 4px 20px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body data-require-auth class="font-body-md text-on-surface">
+<!-- SideNavBar -->
+<aside class="bg-surface-container dark:bg-surface-container-low h-screen w-64 fixed left-0 top-0 overflow-y-auto border-r border-outline-variant dark:border-outline flex flex-col gap-stack-md py-container-padding z-50">
+<div class="px-6 mb-8">
+<h1 class="font-display-lg text-display-lg font-bold text-primary dark:text-primary-fixed">EBSPL</h1>
+<p class="text-on-surface-variant text-xs font-label-bold">Financial Management</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary dark:text-secondary-fixed font-bold border-r-4 border-secondary dark:border-secondary-fixed bg-secondary-container/10" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md">Clients</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-body-md">Invoicing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-md">Expenses</span>
+</a>
+</nav>
+<div class="mt-auto px-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-body-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface fixed top-0 right-0 w-[calc(100%-16rem)] z-40 border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none flex items-center justify-between px-container-padding h-16 ml-64">
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-body-sm focus:outline-none focus:border-primary" placeholder="Search clients, transactions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="hover:bg-surface-container dark:hover:bg-surface-container-highest rounded-full p-2 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-surface-container dark:hover:bg-surface-container-highest rounded-full p-2 transition-transform active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="apps">apps</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant ml-2">
+<img alt="Manager Profile" data-alt="A professional corporate headshot of a financial manager wearing a sharp navy blue suit against a clean, minimal office background. The lighting is soft and professional, reflecting a trustworthy and efficient brand persona within a modern light-mode interface. The color palette is composed of sophisticated neutrals and deep blues, emphasizing clarity and expertise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANk_umC7y9AjtGBiiCtMqYOZvkNV3Jd5SS1gVjL7Jho5YVRrG4QUCUy3oIFFYrW4wU2prH7mbFRLFsio8f1d8rKWC7fDnoneySGjnudRitUllz6OsPJMmi1mFWUWjAjPd1G9jqwY6tnct9NNg4wUopuk5ibuSliVwf09E5IuOT64Gtdz77H7O7dE6mD44nuc0bCUObbam0G91vkqdYaa5jSkOjqI5qjeYGK0mQdQ7isNTAURVfG1vtnyaxlxn215xRwNTZhBwijmU"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-16 p-container-padding">
+<div class="max-w-5xl mx-auto">
+<!-- Header & Progress Stepper -->
+<div class="mb-stack-lg">
+<div class="flex items-center gap-2 text-primary mb-2">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+<span class="font-label-bold uppercase">Onboarding</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-primary mb-8">Client Onboarding</h2>
+<!-- Stepper -->
+<div class="relative flex items-center justify-between">
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-outline-variant -translate-y-1/2 z-0"></div>
+<!-- Step 1 Active -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-md">1</div>
+<span class="mt-2 font-label-bold text-primary">Business Profile</span>
+</div>
+<!-- Step 2 Inactive -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant border-2 border-outline-variant flex items-center justify-center font-bold">2</div>
+<span class="mt-2 font-label-bold text-on-surface-variant">Bank Integration</span>
+</div>
+<!-- Step 3 Inactive -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant border-2 border-outline-variant flex items-center justify-center font-bold">3</div>
+<span class="mt-2 font-label-bold text-on-surface-variant">Initial Setup</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout for Step 1 -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Main Form Card -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl p-stack-lg border border-outline-variant shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
+<div class="flex items-center justify-between mb-stack-md">
+<h3 class="font-headline-md text-headline-md text-primary">Step 1: Business Identity</h3>
+<span class="material-symbols-outlined text-outline cursor-help" data-icon="info" title="Provide legal information exactly as it appears on tax documents.">info</span>
+</div>
+<form class="space-y-stack-md">
+<div class="grid grid-cols-2 gap-stack-md">
+<div class="col-span-2">
+<label class="block font-label-bold text-on-surface-variant mb-1">Legal Business Name</label>
+<input class="w-full border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="e.g. Acme Corp LLC" type="text"/>
+</div>
+<div>
+<label class="block font-label-bold text-on-surface-variant mb-1">Tax Identification Number (TIN)</label>
+<input class="w-full border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="XX-XXXXXXX" type="text"/>
+</div>
+<div>
+<label class="block font-label-bold text-on-surface-variant mb-1">Industry Sector</label>
+<select class="w-full border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all bg-white">
+<option>Technology &amp; SaaS</option>
+<option>Professional Services</option>
+<option>Retail &amp; E-commerce</option>
+<option>Manufacturing</option>
+</select>
+</div>
+<div>
+<label class="block font-label-bold text-on-surface-variant mb-1">Reporting Currency</label>
+<select class="w-full border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all bg-white">
+<option>USD - US Dollar</option>
+<option>EUR - Euro</option>
+<option>GBP - British Pound</option>
+<option>CAD - Canadian Dollar</option>
+</select>
+</div>
+<div>
+<label class="block font-label-bold text-on-surface-variant mb-1">Fiscal Year End</label>
+<input class="w-full border border-outline-variant rounded-lg p-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all" type="date"/>
+</div>
+</div>
+<div class="pt-stack-lg flex justify-end gap-stack-md">
+<button class="px-6 py-2.5 font-label-bold text-secondary border border-secondary rounded-lg hover:bg-secondary/5 transition-colors" type="button">Save Draft</button>
+<button class="px-8 py-2.5 font-label-bold bg-primary text-on-primary rounded-lg shadow-md hover:bg-primary/90 active:scale-95 transition-all" type="button">Next: Bank Connection</button>
+</div>
+</form>
+</div>
+<!-- Guidance & Contextual Info -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<!-- Guidance Card -->
+<div class="bg-secondary-container text-on-primary rounded-xl p-stack-lg relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-title-sm text-title-sm mb-2">Why this matters?</h4>
+<p class="text-body-sm opacity-90 leading-relaxed mb-4">Your Legal Name and Tax ID are essential for automated tax filing and regulatory compliance reporting within EBSPL.</p>
+<div class="flex items-center gap-2 text-tertiary-fixed font-label-bold">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span>
+<span>Encrypted &amp; Secure</span>
+</div>
+</div>
+<!-- Abstract pattern background -->
+<div class="absolute -right-10 -bottom-10 opacity-10">
+<span class="material-symbols-outlined text-[160px]" data-icon="account_balance">account_balance</span>
+</div>
+</div>
+<!-- Checklist Card -->
+<div class="bg-surface-container-lowest rounded-xl p-stack-lg border border-outline-variant">
+<h4 class="font-label-bold text-on-surface-variant uppercase mb-stack-md">Setup Checklist</h4>
+<ul class="space-y-stack-md">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="text-body-md font-bold">Business Profile</p>
+<p class="text-body-sm text-on-surface-variant">Complete your legal entity details.</p>
+</div>
+</li>
+<li class="flex items-start gap-3 opacity-50">
+<span class="material-symbols-outlined text-outline-variant text-lg" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<div>
+<p class="text-body-md font-bold">Bank Integration</p>
+<p class="text-body-sm text-on-surface-variant">Sync with your financial accounts.</p>
+</div>
+</li>
+<li class="flex items-start gap-3 opacity-50">
+<span class="material-symbols-outlined text-outline-variant text-lg" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<div>
+<p class="text-body-md font-bold">Team Invite</p>
+<p class="text-body-sm text-on-surface-variant">Add your accountant or bookkeeper.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<!-- Bottom Helper Cards (Asymmetric) -->
+<div class="col-span-12 md:col-span-6 bg-surface-container-high/50 rounded-xl p-stack-lg border border-outline-variant flex gap-stack-md items-center">
+<div class="bg-primary-fixed p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="support_agent">support_agent</span>
+</div>
+<div>
+<h5 class="font-bold text-primary">Need assistance?</h5>
+<p class="text-body-sm text-on-surface-variant">Schedule a 15-minute onboarding call with our finance experts.</p>
+<a class="text-secondary font-label-bold text-xs mt-2 inline-block" href="#">Book Now →</a>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 bg-tertiary-fixed/10 rounded-xl p-stack-lg border border-tertiary-fixed-dim/30 flex gap-stack-md items-center">
+<div class="bg-tertiary-fixed p-3 rounded-lg text-tertiary">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h5 class="font-bold text-tertiary">Smart Importer</h5>
+<p class="text-body-sm text-on-surface-variant">Have data in QuickBooks or Xero? Use our 1-click migration tool later.</p>
+<a class="text-on-tertiary-fixed-variant font-label-bold text-xs mt-2 inline-block" href="#">Learn More →</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Only for main landing, but kept for demo of task) -->
+<!-- Suppressed on Onboarding per "Shell Visibility & Relevance" rule for focused journey -->
+<script src="../profiles.js"></script>
+<script src="../auth.js"></script></body></html>

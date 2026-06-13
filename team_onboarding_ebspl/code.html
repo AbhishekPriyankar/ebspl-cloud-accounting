@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Team Member Onboarding | EBSPL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#e7f3f7",
+                        "secondary": "#5644d0",
+                        "primary-fixed": "#e7deff",
+                        "inverse-primary": "#ccbdff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#6dfad2",
+                        "outline": "#797583",
+                        "secondary-container": "#6f5fea",
+                        "on-background": "#131d21",
+                        "tertiary-fixed-dim": "#4bddb7",
+                        "outline-variant": "#cac4d3",
+                        "surface-dim": "#d1dce0",
+                        "on-secondary-fixed-variant": "#4029ba",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#19bf9a",
+                        "on-surface": "#131d21",
+                        "surface-container": "#e4f0f4",
+                        "surface": "#f1fbff",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#d9e4e9",
+                        "surface-container-low": "#eaf5fa",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary": "#2d0d76",
+                        "tertiary": "#002f24",
+                        "on-secondary-container": "#fffbff",
+                        "on-tertiary-fixed": "#002018",
+                        "on-primary-fixed-variant": "#4c3595",
+                        "secondary-fixed": "#e4dfff",
+                        "on-primary-fixed": "#1f005f",
+                        "on-tertiary-fixed-variant": "#005140",
+                        "secondary-fixed-dim": "#c6bfff",
+                        "tertiary-container": "#004738",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#ccbdff",
+                        "surface-container-high": "#dfeaef",
+                        "surface-tint": "#644eaf",
+                        "surface-bright": "#f1fbff",
+                        "error-container": "#ffdad6",
+                        "background": "#f1fbff",
+                        "primary-container": "#432b8c",
+                        "on-primary-container": "#b09aff",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#484551",
+                        "inverse-surface": "#283236",
+                        "on-secondary-fixed": "#160066",
+                        "surface-container-highest": "#d9e4e9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "24px",
+                        "container-padding": "24px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "title-sm": ["Manrope"],
+                        "label-bold": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f1fbff;
+            color: #131d21;
+        }
+        .card-shadow {
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cac4d3;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body data-require-auth class="font-body-md text-body-md antialiased">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-surface-container dark:bg-surface-container-low border-r border-outline-variant dark:border-outline flex flex-col gap-stack-md py-container-padding z-50">
+<div class="px-6 mb-8">
+<h1 class="font-display-lg text-display-lg font-bold text-primary dark:text-primary-fixed">EBSPL</h1>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Financial Management</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 text-secondary dark:text-secondary-fixed font-bold border-r-4 border-secondary dark:border-secondary-fixed bg-secondary-container/10" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md text-body-md">Clients</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-body-md text-body-md">Invoicing</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-md text-body-md">Expenses</span>
+</a>
+</nav>
+<div class="px-4 mt-auto border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none flex items-center justify-between px-container-padding h-16 ml-64">
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 pl-10 pr-4 focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none text-body-sm transition-all" placeholder="Search clients, transactions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="hover:bg-surface-container dark:hover:bg-surface-container-highest rounded-full p-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-surface-container dark:hover:bg-surface-container-highest rounded-full p-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="apps">apps</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-body-sm font-label-bold text-primary leading-none">Admin Manager</p>
+<p class="text-[10px] text-outline font-medium">EBSPL HQ</p>
+</div>
+<img alt="Manager Profile" class="h-10 w-10 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a middle-aged corporate manager with a friendly expression. The person is wearing a sharp navy blue blazer over a crisp white shirt. The background is a blurred high-end office interior with soft, bright lighting consistent with a professional financial platform's modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2xelJwm3i-IGl3Kx_Xkkm8ZmTsFOAFFJTh2E6IjOa080SrnVvgiK106Tq9WCxfLJ5PPRmoMPz5lwCsA72W9LHU9-ecFPWI5217VLj82yckVIQ47aa-3m91_qtgylk45K_uo4CPYevwnpRS8q0ElX2O5frDEc9XRTOiTg2Xt8auR4azNDHZbuHPWW1ae3PW46p-E3s6eBCnO1o1y0gU_P6D1Elv3blg3id1RcWorOg_CUj_iNGRkJZqUkrGnJFuTK-kfsTAGP5uuI"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 px-container-padding pb-container-padding min-h-screen">
+<!-- Welcome Message Section -->
+<section class="mb-stack-lg max-w-5xl mx-auto">
+<div class="bg-gradient-to-r from-primary to-secondary rounded-xl p-8 text-white relative overflow-hidden shadow-lg">
+<div class="relative z-10 max-w-2xl">
+<h2 class="font-display-lg text-display-lg mb-2">Welcome to the Team, Sarah!</h2>
+<p class="text-primary-fixed text-title-sm font-title-sm opacity-90">Let's get your professional profile and access levels configured for the Horizon Enterprise account.</p>
+</div>
+<div class="absolute right-[-20px] top-[-20px] opacity-10">
+<span class="material-symbols-outlined text-[200px]" data-icon="hub">hub</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Layout for Onboarding Steps -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-stack-md max-w-5xl mx-auto">
+<!-- Profile Completion Card -->
+<div class="lg:col-span-5 bg-white rounded-xl card-shadow border border-outline-variant overflow-hidden flex flex-col">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low">
+<h3 class="font-title-sm text-title-sm text-primary">Profile Completion</h3>
+</div>
+<div class="p-6 flex flex-col gap-stack-md">
+<div class="flex items-center gap-stack-md">
+<div class="relative">
+<img class="w-24 h-24 rounded-full border-4 border-secondary-fixed object-cover" data-alt="A professional portrait of a young female accountant smiling confidently. She has long dark hair and is wearing a stylish professional blouse. The lighting is soft and natural, emphasizing a trustworthy and efficient professional image against a clean, minimalist studio background with purple-tinted ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8CiZpKZL2lAVutfY0FKKunh3lTXazrErpaYMjItr9irzsiyVg-6ii__xOaQ8Rky3cSSpFDkvvCaPNdWlkxfiy4tmL0KxKNUVn164I3WunDJy-WkkCka-ibJDVBINa7uICWSX4vMORjs_tj7qbWyv5yl2xSVcNYGTZ6QraAD_rssDCdIaTzPDhm1B3HtAjiIUxTyP8NjW1Lcj4BM9JL2kaleHG8tC680CjFNcGJZPMHSTnaLgjhJIQ1Ietht38EeJr6SUSEcLexPY"/>
+<button class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full shadow-lg hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[18px]" data-icon="photo_camera">photo_camera</span>
+</button>
+</div>
+<div>
+<p class="font-label-bold text-label-bold text-secondary uppercase tracking-wider mb-1">Status</p>
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-tertiary-fixed/20 text-on-tertiary-fixed-variant text-[11px] font-bold">
+                                PROFILE 65% COMPLETE
+                            </span>
+</div>
+</div>
+<div class="flex flex-col gap-4 mt-2">
+<div>
+<label class="block text-body-sm font-label-bold text-on-surface-variant mb-1">Full Name</label>
+<input class="w-full border border-outline-variant rounded-lg p-3 text-body-md focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none bg-surface-container-lowest" type="text" value="Sarah Jenkins"/>
+</div>
+<div>
+<label class="block text-body-sm font-label-bold text-on-surface-variant mb-1">Email Address</label>
+<input class="w-full border border-outline-variant rounded-lg p-3 text-body-md focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none bg-surface-container-lowest" type="email" value="s.jenkins@horizon.com"/>
+</div>
+<div>
+<label class="block text-body-sm font-label-bold text-on-surface-variant mb-1">Phone Number</label>
+<input class="w-full border border-outline-variant rounded-lg p-3 text-body-md focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none bg-surface-container-lowest" placeholder="+1 (555) 000-0000" type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Role Definition & Permissions -->
+<div class="lg:col-span-7 flex flex-col gap-stack-md">
+<!-- Role Selection -->
+<div class="bg-white rounded-xl card-shadow border border-outline-variant flex flex-col h-full">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low">
+<h3 class="font-title-sm text-title-sm text-primary">Role Definition</h3>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+<label class="relative cursor-pointer group">
+<input checked="" class="peer sr-only" name="role" type="radio"/>
+<div class="h-full border-2 border-outline-variant rounded-xl p-4 transition-all group-hover:border-secondary peer-checked:border-secondary peer-checked:bg-secondary-container/5">
+<span class="material-symbols-outlined text-secondary mb-2 block" data-icon="admin_panel_settings">admin_panel_settings</span>
+<p class="font-label-bold text-primary mb-1">Admin</p>
+<p class="text-[11px] text-on-surface-variant leading-tight">Full access to all modules and user management.</p>
+</div>
+</label>
+<label class="relative cursor-pointer group">
+<input class="peer sr-only" name="role" type="radio"/>
+<div class="h-full border-2 border-outline-variant rounded-xl p-4 transition-all group-hover:border-secondary peer-checked:border-secondary peer-checked:bg-secondary-container/5">
+<span class="material-symbols-outlined text-secondary mb-2 block" data-icon="account_balance">account_balance</span>
+<p class="font-label-bold text-primary mb-1">Accountant</p>
+<p class="text-[11px] text-on-surface-variant leading-tight">Can manage ledger, invoices, and expenses.</p>
+</div>
+</label>
+<label class="relative cursor-pointer group">
+<input class="peer sr-only" name="role" type="radio"/>
+<div class="h-full border-2 border-outline-variant rounded-xl p-4 transition-all group-hover:border-secondary peer-checked:border-secondary peer-checked:bg-secondary-container/5">
+<span class="material-symbols-outlined text-secondary mb-2 block" data-icon="visibility">visibility</span>
+<p class="font-label-bold text-primary mb-1">Viewer</p>
+<p class="text-[11px] text-on-surface-variant leading-tight">Read-only access to reports and dashboards.</p>
+</div>
+</label>
+</div>
+</div>
+<!-- Permissions Setup -->
+<div class="bg-white rounded-xl card-shadow border border-outline-variant flex flex-col h-full">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low">
+<h3 class="font-title-sm text-title-sm text-primary">Permissions Setup</h3>
+</div>
+<div class="p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline" data-icon="receipt">receipt</span>
+<div>
+<p class="font-label-bold text-primary">Invoicing &amp; Billing</p>
+<p class="text-[11px] text-on-surface-variant">Create and manage client invoices and payments.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline" data-icon="account_balance_wallet">account_balance_wallet</span>
+<div>
+<p class="font-label-bold text-primary">Expense Tracking</p>
+<p class="text-[11px] text-on-surface-variant">Log business expenses and upload receipts.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline" data-icon="bar_chart">bar_chart</span>
+<div>
+<p class="font-label-bold text-primary">Financial Reporting</p>
+<p class="text-[11px] text-on-surface-variant">Generate P&amp;L, balance sheets, and tax reports.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="mt-stack-lg max-w-5xl mx-auto flex items-center justify-between bg-white p-6 rounded-xl border border-outline-variant card-shadow">
+<button class="px-6 py-2 rounded-lg font-label-bold text-on-surface-variant hover:bg-surface-container transition-colors">
+                Cancel
+            </button>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2 rounded-lg font-label-bold border border-secondary text-secondary hover:bg-secondary/5 transition-colors">
+                    Save Progress
+                </button>
+<button class="px-8 py-2 rounded-lg font-label-bold bg-primary text-white hover:brightness-110 active:brightness-90 transition-all shadow-md">
+                    Complete Onboarding
+                </button>
+</div>
+</div>
+</main>
+<script src="../profiles.js"></script>
+<script src="../auth.js"></script></body></html>

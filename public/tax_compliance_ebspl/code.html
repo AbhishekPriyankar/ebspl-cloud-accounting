@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tax &amp; Compliance Dashboard - EBSPL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "surface-dim": "#d1dce0",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-low": "#eaf5fa",
+                      "on-surface": "#131d21",
+                      "surface": "#f1fbff",
+                      "primary-container": "#432b8c",
+                      "tertiary-fixed-dim": "#4bddb7",
+                      "on-tertiary-container": "#19bf9a",
+                      "inverse-on-surface": "#e7f3f7",
+                      "surface-variant": "#d9e4e9",
+                      "surface-container": "#e4f0f4",
+                      "on-primary-fixed": "#1f005f",
+                      "error-container": "#ffdad6",
+                      "surface-bright": "#f1fbff",
+                      "tertiary-fixed": "#6dfad2",
+                      "secondary-container": "#6f5fea",
+                      "inverse-surface": "#283236",
+                      "secondary": "#5644d0",
+                      "on-secondary-container": "#fffbff",
+                      "on-primary-fixed-variant": "#4c3595",
+                      "secondary-fixed": "#e4dfff",
+                      "on-primary": "#ffffff",
+                      "on-surface-variant": "#484551",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed": "#160066",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed": "#e7deff",
+                      "primary": "#2d0d76",
+                      "error": "#ba1a1a",
+                      "tertiary": "#002f24",
+                      "surface-container-highest": "#d9e4e9",
+                      "surface-container-high": "#dfeaef",
+                      "inverse-primary": "#ccbdff",
+                      "secondary-fixed-dim": "#c6bfff",
+                      "primary-fixed-dim": "#ccbdff",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#004738",
+                      "outline": "#797583",
+                      "on-tertiary-fixed": "#002018",
+                      "on-secondary-fixed-variant": "#4029ba",
+                      "on-tertiary-fixed-variant": "#005140",
+                      "on-primary-container": "#b09aff",
+                      "surface-tint": "#644eaf",
+                      "outline-variant": "#cac4d3",
+                      "on-background": "#131d21",
+                      "background": "#f1fbff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-sm": "8px",
+                      "stack-lg": "24px",
+                      "stack-md": "16px",
+                      "gutter": "16px",
+                      "container-padding": "24px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "data-mono": ["Inter"],
+                      "label-bold": ["Inter"],
+                      "headline-md": ["Manrope"],
+                      "body-md": ["Inter"],
+                      "display-lg": ["Manrope"],
+                      "body-sm": ["Inter"],
+                      "title-sm": ["Manrope"]
+              },
+              "fontSize": {
+                      "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                      "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f1fbff;
+        }
+    </style>
+</head>
+<body data-require-auth class="font-body-md text-on-surface">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 flex flex-col py-stack-lg z-50 bg-surface-container-lowest dark:bg-surface-container border-r border-outline-variant">
+<div class="px-6 mb-8">
+<h1 class="font-title-sm text-title-sm font-bold text-primary">EBSPL</h1>
+<p class="text-[10px] text-on-surface-variant tracking-wider uppercase">Cloud Accounting Services</p>
+</div>
+<nav class="flex-1 overflow-y-auto space-y-1">
+<a class="text-on-surface-variant flex items-center px-4 py-3 mx-2 my-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 mx-2 my-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mr-3">group</span>
+<span class="font-label-bold text-label-bold">Clients &amp; Contacts</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 mx-2 my-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mr-3">receipt_long</span>
+<span class="font-label-bold text-label-bold">Invoicing &amp; Billing</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 mx-2 my-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mr-3">payments</span>
+<span class="font-label-bold text-label-bold">Expenses &amp; Payables</span>
+</a>
+<a class="bg-primary-container text-on-primary-container rounded-lg mx-2 my-1 flex items-center px-4 py-3 active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined mr-3">account_balance_wallet</span>
+<span class="font-label-bold text-label-bold">Tax &amp; Compliance</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 mx-2 my-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mr-3">cloud_upload</span>
+<span class="font-label-bold text-label-bold">Uploads &amp; Documents</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 mx-2 my-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mr-3">assessment</span>
+<span class="font-label-bold text-label-bold">Reports</span>
+</a>
+<a class="text-on-surface-variant flex items-center px-4 py-3 mx-2 my-1 hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-all active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4">
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-label-bold text-label-bold flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm">add</span>
+                Quick Action
+            </button>
+<div class="mt-6 border-t border-outline-variant pt-4">
+<a class="text-on-surface-variant flex items-center px-4 py-3 hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined mr-3">headset_mic</span>
+<span class="font-label-bold text-label-bold">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-container-padding h-16 w-full sticky top-0 z-40 bg-surface dark:bg-inverse-surface border-b border-outline-variant shadow-sm">
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<div class="flex items-center gap-4">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-body-sm focus:ring-2 focus:ring-primary-container" placeholder="Search records, filings or reports..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:bg-surface-container-high p-2 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="font-label-bold text-label-bold text-on-surface leading-none">John Smith</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Senior Accountant</p>
+</div>
+<img alt="John Smith's profile picture" class="w-10 h-10 rounded-full border-2 border-primary-container/20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmO1ZApC_mzK1--ByQIra6Br3qRyqQWeOnlZbSaiEaQF_iSCAuGxnJvMizejQTSfaeOO5iRhfg7hcm8J3GIg1c_oz-ktJ7ZFZOgtr-tS7m-KhM6zbRVHpXYDwpLSm0dcHJKH9ef-6qy9IJJja43jyKbiBSubuYIGGg1ponhLu_URV8RBfa9UrUyxdUK7syDF9ilRK2Fj8h3i5ai2YpjMgbIyUCmXNXbq_6SJqRVuzodk996htWTDG44jCxMAcHj0h79l-aq2pRs2Y"/>
+</div>
+</div>
+</header>
+<div class="p-container-padding max-w-7xl mx-auto space-y-stack-lg">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-display-lg text-display-lg text-primary">Tax &amp; Compliance</h2>
+<p class="text-on-surface-variant mt-1 font-body-md">Monitor your fiscal health and upcoming statutory obligations.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 bg-white border border-primary text-primary rounded-xl font-label-bold text-label-bold hover:bg-primary-fixed transition-colors">
+                        Export Report
+                    </button>
+<button class="px-6 py-2.5 bg-primary text-on-primary rounded-xl font-label-bold text-label-bold shadow-md hover:opacity-90 transition-all">
+                        File New Return
+                    </button>
+</div>
+</div>
+<!-- Dashboard Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-stack-lg">
+<!-- Compliance Status (High Impact Card) -->
+<div class="md:col-span-8 bg-white rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col md:flex-row items-center border border-outline-variant/30">
+<div class="p-8 md:w-1/2 space-y-4">
+<div class="inline-flex items-center px-3 py-1 bg-tertiary-fixed/30 text-tertiary-container rounded-full gap-2">
+<span class="w-2 h-2 bg-on-tertiary-container rounded-full"></span>
+<span class="text-[11px] font-bold uppercase tracking-wider">Operational Status</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Overall Compliance: <span class="text-on-tertiary-container">Fully Compliant</span></h3>
+<p class="text-on-surface-variant text-body-md">Your business has met all statutory requirements for the current fiscal quarter. No immediate action is required for active filings.</p>
+<div class="flex items-center gap-6 pt-2">
+<div>
+<p class="text-2xl font-bold text-primary">100%</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">On-time Filings</p>
+</div>
+<div class="w-px h-8 bg-outline-variant"></div>
+<div>
+<p class="text-2xl font-bold text-primary">0</p>
+<p class="text-[10px] text-on-surface-variant uppercase font-bold">Open Disputes</p>
+</div>
+</div>
+</div>
+<div class="md:w-1/2 h-64 md:h-full min-h-[240px] relative bg-primary-container overflow-hidden">
+<img class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60" data-alt="A professional, high-end close-up of financial documents and a modern calculator on a sleek wooden desk. The lighting is soft and natural, emphasizing a clean corporate environment with deep purple and light blue color tones. The image conveys precision, tax compliance, and modern business efficiency in a light-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFQwxYB2yhMg_hKUSgSIb8h3AWvDB5rEHCeiYFPAmZwoKS9-Aq8UCR8l6J8VksXBBC8ih68m0MF31xsa_O-ooSJ5ZDGbmnz0xsHEfz0bS-QnAghKvTnbNg_cW8ZZw0-je6JnBOY3F4yc3eFnhy1S8V4Jg7J_0LiXaJXIWclUnGNQYe20rtLrGgEZ8NKmDF6jDU-0lw_zg0NRvU8qnoKWvk6wwaV70nFb78ijHYCJdAaKgCsWOsa-mX3m5RVt49MIjMyRzXS4RLeFw"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary-container via-transparent to-transparent"></div>
+</div>
+</div>
+<!-- Quick Links Card -->
+<div class="md:col-span-4 space-y-4">
+<div class="bg-white p-6 rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 h-full">
+<h4 class="font-label-bold text-label-bold text-on-surface-variant uppercase mb-6">Quick Resources</h4>
+<div class="space-y-3">
+<a class="flex items-center p-3 rounded-lg hover:bg-surface-container-low border border-transparent hover:border-outline-variant/30 transition-all group" href="#">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="ml-4">
+<p class="font-label-bold text-label-bold text-on-surface">Tax Liability Report</p>
+<p class="text-xs text-on-surface-variant">Q3 Estimates &amp; Summaries</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</a>
+<a class="flex items-center p-3 rounded-lg hover:bg-surface-container-low border border-transparent hover:border-outline-variant/30 transition-all group" href="#">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+<div class="ml-4">
+<p class="font-label-bold text-label-bold text-on-surface">Compliance Settings</p>
+<p class="text-xs text-on-surface-variant">Update tax jurisdictions</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</a>
+<a class="flex items-center p-3 rounded-lg hover:bg-surface-container-low border border-transparent hover:border-outline-variant/30 transition-all group" href="#">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">folder_shared</span>
+</div>
+<div class="ml-4">
+<p class="font-label-bold text-label-bold text-on-surface">Audit Archive</p>
+<p class="text-xs text-on-surface-variant">Access historical filings</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Upcoming Deadlines -->
+<div class="md:col-span-5 bg-white rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex flex-col">
+<div class="p-6 border-b border-outline-variant/30 flex justify-between items-center">
+<h4 class="font-title-sm text-title-sm text-on-surface">Upcoming Deadlines</h4>
+<button class="text-primary font-label-bold text-label-bold hover:underline">View Calendar</button>
+</div>
+<div class="p-6 space-y-4">
+<!-- Deadline 1 -->
+<div class="relative pl-6 border-l-2 border-secondary flex justify-between items-start py-1">
+<div>
+<p class="font-label-bold text-label-bold text-on-surface">VAT Return Submission</p>
+<p class="text-xs text-on-surface-variant">Quarterly VAT (Q3 2023)</p>
+</div>
+<div class="text-right">
+<p class="text-body-md font-bold text-on-surface">Oct 15, 2023</p>
+<p class="text-[10px] text-secondary font-bold uppercase">In 12 Days</p>
+</div>
+</div>
+<!-- Deadline 2 -->
+<div class="relative pl-6 border-l-2 border-outline flex justify-between items-start py-1">
+<div>
+<p class="font-label-bold text-label-bold text-on-surface">Payroll Tax Deposit</p>
+<p class="text-xs text-on-surface-variant">Monthly Form 941</p>
+</div>
+<div class="text-right">
+<p class="text-body-md font-bold text-on-surface">Oct 31, 2023</p>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase">Scheduled</p>
+</div>
+</div>
+<!-- Deadline 3 -->
+<div class="relative pl-6 border-l-2 border-outline flex justify-between items-start py-1">
+<div>
+<p class="font-label-bold text-label-bold text-on-surface">Corporate Tax Extension</p>
+<p class="text-xs text-on-surface-variant">Annual Filing 2022</p>
+</div>
+<div class="text-right">
+<p class="text-body-md font-bold text-on-surface">Nov 15, 2023</p>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase">Upcoming</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Filings Table -->
+<div class="md:col-span-7 bg-white rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex flex-col overflow-hidden">
+<div class="p-6 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-lowest">
+<h4 class="font-title-sm text-title-sm text-on-surface">Recent Filings</h4>
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-6 py-3 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Reference No.</th>
+<th class="px-6 py-3 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Tax Type</th>
+<th class="px-6 py-3 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Filed Date</th>
+<th class="px-6 py-3 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider text-right">Amount</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4 font-data-mono text-data-mono text-on-surface">TX-2023-0892</td>
+<td class="px-6 py-4 text-body-sm text-on-surface">Sales Tax (Monthly)</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Sep 12, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-tertiary-fixed/40 text-on-tertiary-fixed-variant">
+                                            Submitted
+                                        </span>
+</td>
+<td class="px-6 py-4 font-data-mono text-data-mono text-on-surface text-right">$4,290.00</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4 font-data-mono text-data-mono text-on-surface">TX-2023-0881</td>
+<td class="px-6 py-4 text-body-sm text-on-surface">FICA Payroll</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Aug 30, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-primary-fixed text-primary">
+                                            Processed
+                                        </span>
+</td>
+<td class="px-6 py-4 font-data-mono text-data-mono text-on-surface text-right">$12,450.00</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4 font-data-mono text-data-mono text-on-surface">TX-2023-0875</td>
+<td class="px-6 py-4 text-body-sm text-on-surface">VAT Quarterly</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Aug 15, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-tertiary-fixed/40 text-on-tertiary-fixed-variant">
+                                            Submitted
+                                        </span>
+</td>
+<td class="px-6 py-4 font-data-mono text-data-mono text-on-surface text-right">$8,122.50</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="px-6 py-4 font-data-mono text-data-mono text-error">TX-2023-0860</td>
+<td class="px-6 py-4 text-body-sm text-on-surface">State Income Tax</td>
+<td class="px-6 py-4 text-body-sm text-error">Overdue 5d</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-error-container text-on-error-container">
+                                            Overdue
+                                        </span>
+</td>
+<td class="px-6 py-4 font-data-mono text-data-mono text-on-surface text-right">$2,900.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB for Tax Filing -->
+<button class="fixed bottom-8 right-8 w-16 h-16 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+<script src="../profiles.js"></script>
+<script src="../auth.js"></script></body></html>

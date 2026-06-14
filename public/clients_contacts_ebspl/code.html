@@ -1,0 +1,414 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EBSPL | Clients &amp; Contacts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1fbff;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#f1fbff",
+                      "on-surface": "#131d21",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#004738",
+                      "inverse-primary": "#ccbdff",
+                      "surface-container-highest": "#d9e4e9",
+                      "secondary-fixed": "#e4dfff",
+                      "primary-fixed-dim": "#ccbdff",
+                      "tertiary-fixed-dim": "#4bddb7",
+                      "secondary": "#5644d0",
+                      "secondary-container": "#6f5fea",
+                      "surface-container-high": "#dfeaef",
+                      "on-surface-variant": "#484551",
+                      "on-primary-fixed-variant": "#4c3595",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-on-surface": "#e7f3f7",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#432b8c",
+                      "tertiary-fixed": "#6dfad2",
+                      "outline": "#797583",
+                      "surface-container": "#e4f0f4",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed": "#e7deff",
+                      "on-tertiary-fixed": "#002018",
+                      "surface-dim": "#d1dce0",
+                      "on-secondary-container": "#fffbff",
+                      "surface-tint": "#644eaf",
+                      "tertiary": "#002f24",
+                      "surface-variant": "#d9e4e9",
+                      "on-error": "#ffffff",
+                      "primary": "#2d0d76",
+                      "on-tertiary-fixed-variant": "#005140",
+                      "on-secondary-fixed": "#160066",
+                      "secondary-fixed-dim": "#c6bfff",
+                      "on-primary-fixed": "#1f005f",
+                      "outline-variant": "#cac4d3",
+                      "background": "#f1fbff",
+                      "surface-container-low": "#eaf5fa",
+                      "on-tertiary-container": "#19bf9a",
+                      "on-tertiary": "#ffffff",
+                      "inverse-surface": "#283236",
+                      "error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#4029ba",
+                      "surface-bright": "#f1fbff",
+                      "on-background": "#131d21",
+                      "on-primary-container": "#b09aff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "container-padding": "24px",
+                      "stack-md": "16px",
+                      "stack-lg": "24px",
+                      "unit": "4px",
+                      "stack-sm": "8px"
+              },
+              "fontFamily": {
+                      "data-mono": ["Inter"],
+                      "label-bold": ["Inter"],
+                      "headline-md": ["Manrope"],
+                      "body-sm": ["Inter"],
+                      "display-lg": ["Manrope"],
+                      "title-sm": ["Manrope"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                      "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body data-require-auth class="flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="docked left-0 h-screen w-64 border-r border-outline-variant bg-surface-container-lowest flex flex-col py-6 px-4 gap-2 fixed z-50">
+<div class="mb-8 px-2">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">EBSPL</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Cloud Accounting</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary text-on-primary rounded-lg font-bold transition-all duration-150 scale-[0.98]" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-body-md font-body-md">Clients &amp; Contacts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-body-md font-body-md">Invoicing &amp; Billing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-body-md font-body-md">Expenses &amp; Payables</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">account_balance</span>
+<span class="text-body-md font-body-md">Bank Reconciliation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-body-md font-body-md">Financial Statements</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span class="text-body-md font-body-md">Tax &amp; Compliance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">cloud_upload</span>
+<span class="text-body-md font-body-md">Uploads &amp; Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-body-md font-body-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-2 pt-6 border-t border-outline-variant">
+<button class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg">
+<span class="material-symbols-outlined">chat</span>
+<span class="text-body-md font-body-md">Chat &amp; Support</span>
+</button>
+<div class="bg-primary-container p-4 rounded-xl mt-4">
+<p class="text-label-bold font-label-bold text-on-primary-container mb-2">Need help?</p>
+<button class="w-full bg-on-primary-container text-primary-container py-2 rounded-lg font-bold text-body-md transition-all active:scale-95">EBSPL Support</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="flex-1 ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="h-16 w-full flex items-center justify-between px-container-padding bg-surface sticky top-0 z-40">
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<div class="flex items-center flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-md focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all outline-none" placeholder="Search clients, invoices, or records..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all rounded-full hover:bg-surface-container-high">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3 pl-2">
+<span class="text-label-bold font-label-bold text-on-surface text-right hidden sm:block">John Smith</span>
+<img alt="John Smith Profile Image" class="h-10 w-10 rounded-full border-2 border-primary-container object-cover" data-alt="A professional close-up headshot of a middle-aged male accountant with a friendly smile, wearing a modern charcoal suit and glasses. The background is a brightly lit, high-end office interior with soft out-of-focus architectural details. The lighting is soft and corporate, matching a clean light-mode UI design with premium indigo accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBi2eT_JQzFWXlDx7hOxilD0sA9R4ctcIFbiEyol3-pnXrATc1XVr_MvmX4lD0Q2srXwtpG4DzdqZOTkiufyCl6lcdfgUEL2tstCtKyprmvaFz00ElUTE1q9_0ZmG9uZPSRA9FAmsLH2vuNGaQPiCR81-FnaIUUjLZZrbapVmzC-PhSHiVhMIeC1LLPbEtgMEUXtqQMrxdqlTsXhgv077PtrdTUebq2HpdBIUPtG_7otadAoIh-KRLa2pktT5hGJXEsbGE5oaTfu4"/>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-container-padding flex-1">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div>
+<h2 class="text-display-lg font-display-lg text-primary">Clients &amp; Contacts</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Manage your professional relationships and billing details.</p>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all hover:bg-primary hover:text-on-primary active:scale-95 shadow-md">
+<span class="material-symbols-outlined">add</span>
+                    Add New Contact
+                </button>
+</div>
+<!-- Dashboard/Table Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+<!-- Filters Bar -->
+<div class="p-4 bg-surface-container-low flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<span class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider">Show:</span>
+<select class="bg-transparent border-none text-body-md font-bold text-primary focus:ring-0 cursor-pointer">
+<option>All Contacts</option>
+<option>Active Clients</option>
+<option>Prospects</option>
+<option>Archived</option>
+</select>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-3 py-1.5 text-body-sm font-label-bold border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                            Filters
+                        </button>
+<button class="flex items-center gap-2 px-3 py-1.5 text-body-sm font-label-bold border border-outline-variant rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+                            Export
+                        </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-6 py-3 text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider">Name</th>
+<th class="px-6 py-3 text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider">Company</th>
+<th class="px-6 py-3 text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider">Email Address</th>
+<th class="px-6 py-3 text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider text-right">Phone Number</th>
+<th class="px-6 py-3 text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider text-right">Last Interaction</th>
+<th class="px-6 py-3 text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+                                            AH
+                                        </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Alex Henderson</p>
+<span class="text-[11px] px-2 py-0.5 rounded-full bg-tertiary/10 text-on-tertiary-container font-bold uppercase">Active</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Henderson &amp; Co.</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">alex@henderson.io</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">+1 (555) 012-3456</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">Oct 24, 2023</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Sarah Chen Profile" class="h-10 w-10 rounded-full object-cover" data-alt="A high-quality professional portrait of a young Asian female executive with a confident posture. She is wearing a modern cream-colored blazer. The image is set against a blurred, minimalist background of a contemporary architectural space with warm, natural sunlight. The aesthetic is clean, professional, and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXjYrA8t99-8zSRJNaDZMEMtHJW3b3sdR4bwEfHIl5apjoI2MGhBOCZpFxQsuUrRlxDIeTqs6HB2ai8UOFx6khKfXcAuWVlqfRETinWtGOxzJuAYm9x4l1LM0UDHXPYC1-K5e28pPu0YtvQ-wsVPm9DL49LTqBakvuK2ZpR9SvXhLlRHYGxOAveVJ6_NA8NnuyJj3jZavS1p6jMZ4CvNOhzPmJo0DF-50ZS2XlBCzmSnayG5asRYZfBYp62TEgUa4jsEgvBrYWDIk"/>
+<div>
+<p class="text-body-md font-bold text-on-surface">Sarah Chen</p>
+<span class="text-[11px] px-2 py-0.5 rounded-full bg-secondary/10 text-secondary font-bold uppercase">Enterprise</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Apex Dynamics</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">s.chen@apexdyn.com</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">+1 (555) 987-6543</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">Oct 22, 2023</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">
+                                            MJ
+                                        </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Marcus Jensen</p>
+<span class="text-[11px] px-2 py-0.5 rounded-full bg-tertiary/10 text-on-tertiary-container font-bold uppercase">Active</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Jensen Logistics</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">marcus@jensenlog.net</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">+1 (555) 234-5678</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">Oct 21, 2023</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="David Miller Profile" class="h-10 w-10 rounded-full object-cover" data-alt="A sharp, studio-lit professional headshot of a male business leader with a neat beard and a stylish navy blue shirt. He is looking directly at the camera with an approachable expression. The lighting is crisp and modern, featuring soft shadows to add depth. The background is a solid, neutral light gray that emphasizes the subject's clarity and professionalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBajtqyyNpFg3dguK7uqCumrJT7LRxXtOp96jlnhfwxw4lGP-xCCKt8U-_Rfvo006qp6wVOVPAZ40jO64X0v7iVHgoFgPwTJRJSvsW1PoVN3vEX3LKYfdq4qaPwM8f5ERMdbDy4Xh3YS-xKBzkm7TXZVIRKNSZ29rmhyoFDdeQId-zH6q4ckdn3sN7eqyRtQW4ApLJbgqLfBlLN1G6dl-7to5aiPF1JRyaZtmy1A5eRQUswvuR-y4FCDoOzO93jyIjKKowZll9eCeM"/>
+<div>
+<p class="text-body-md font-bold text-on-surface">David Miller</p>
+<span class="text-[11px] px-2 py-0.5 rounded-full bg-error/10 text-error font-bold uppercase">Overdue</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Miller Creative</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">david@miller.cr</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">+1 (555) 345-6789</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">Oct 15, 2023</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary font-bold">
+                                            EW
+                                        </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Elena Wright</p>
+<span class="text-[11px] px-2 py-0.5 rounded-full bg-on-surface-variant/10 text-on-surface-variant font-bold uppercase">Prospect</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Wright Consulting</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">elena@wright.consulting</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">+1 (555) 456-7890</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">Oct 12, 2023</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-surface-dim flex items-center justify-center text-primary font-bold">
+                                            RP
+                                        </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Robert Patel</p>
+<span class="text-[11px] px-2 py-0.5 rounded-full bg-tertiary/10 text-on-tertiary-container font-bold uppercase">Active</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">Patel Tech</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant">robert@pateltech.com</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">+1 (555) 567-8901</td>
+<td class="px-6 py-4 text-body-md text-on-surface-variant text-right font-data-mono">Oct 05, 2023</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-outline-variant flex items-center justify-between bg-surface-container-lowest">
+<p class="text-body-sm text-on-surface-variant">Showing <span class="font-bold">1-6</span> of <span class="font-bold">128</span> clients</p>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="h-8 w-8 rounded-lg bg-primary text-on-primary font-bold text-body-sm">1</button>
+<button class="h-8 w-8 rounded-lg hover:bg-surface-container-high text-on-surface font-bold text-body-sm transition-colors">2</button>
+<button class="h-8 w-8 rounded-lg hover:bg-surface-container-high text-on-surface font-bold text-body-sm transition-colors">3</button>
+<span class="px-2 text-on-surface-variant">...</span>
+<button class="h-8 w-8 rounded-lg hover:bg-surface-container-high text-on-surface font-bold text-body-sm transition-colors">22</button>
+<button class="p-1 rounded hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Info -->
+<footer class="p-6 text-center">
+<p class="text-body-sm text-on-surface-variant opacity-60">© 2023 EBSPL Cloud Accounting. All Rights Reserved.</p>
+</footer>
+</main>
+<!-- FAB (Suppressed based on context: Details or Transactional, but shown here as it is the main dashboard for contacts) -->
+<button class="fixed bottom-8 right-8 h-14 w-14 rounded-full bg-secondary-container text-on-secondary-container shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person_add</span>
+</button>
+<script src="../profiles.js"></script>
+<script src="../auth.js"></script></body></html>

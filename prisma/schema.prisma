@@ -1,0 +1,25 @@
+// EBSPL Cloud Accounting — Prisma schema
+// Dev: SQLite. Prod: switch provider to "postgresql" and update DATABASE_URL.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String   @unique
+  passwordHash String? // bcrypt hash for email/password login
+  role         String   @default("User") // Admin | Accountant | Client | User
+  initial      String? // avatar initials, e.g. "PS"
+  company      String?
+  loginMethod  String? // password | google | sso
+  image        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

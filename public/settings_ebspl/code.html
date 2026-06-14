@@ -1,0 +1,388 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#e7f3f7",
+                    "surface-container-highest": "#d9e4e9",
+                    "inverse-surface": "#283236",
+                    "on-primary-container": "#b09aff",
+                    "surface-variant": "#d9e4e9",
+                    "tertiary-container": "#004738",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#1f005f",
+                    "background": "#f1fbff",
+                    "on-error": "#ffffff",
+                    "primary": "#2d0d76",
+                    "on-secondary-fixed": "#160066",
+                    "tertiary": "#002f24",
+                    "surface": "#f1fbff",
+                    "on-tertiary-fixed": "#002018",
+                    "inverse-primary": "#ccbdff",
+                    "surface-container-high": "#dfeaef",
+                    "on-surface-variant": "#484551",
+                    "tertiary-fixed-dim": "#4bddb7",
+                    "on-secondary-fixed-variant": "#4029ba",
+                    "on-background": "#131d21",
+                    "surface-container-low": "#eaf5fa",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#e4dfff",
+                    "tertiary-fixed": "#6dfad2",
+                    "on-tertiary-container": "#19bf9a",
+                    "secondary": "#5644d0",
+                    "on-secondary-container": "#fffbff",
+                    "surface-dim": "#d1dce0",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#cac4d3",
+                    "secondary-fixed-dim": "#c6bfff",
+                    "on-primary-fixed-variant": "#4c3595",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f1fbff",
+                    "on-surface": "#131d21",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#ccbdff",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#e7deff",
+                    "primary-container": "#432b8c",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#005140",
+                    "surface-container": "#e4f0f4",
+                    "surface-tint": "#644eaf",
+                    "secondary-container": "#6f5fea",
+                    "outline": "#797583"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-padding": "24px",
+                    "stack-lg": "24px",
+                    "gutter": "16px",
+                    "stack-md": "16px",
+                    "unit": "4px",
+                    "stack-sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Manrope"],
+                    "data-mono": ["Inter"],
+                    "title-sm": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "body-sm": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav-shadow {
+            box-shadow: 0 4px 12px rgba(45, 13, 118, 0.15);
+        }
+        .settings-card {
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body data-require-auth class="bg-surface text-on-surface font-body-md">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="docked left-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant flex flex-col h-full py-6 px-4 gap-2 z-20">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">EBSPL</h1>
+<p class="text-[10px] uppercase tracking-widest text-outline">Cloud Accounting</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md">Clients &amp; Contacts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-body-md">Invoicing &amp; Billing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-md">Expenses &amp; Payables</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span class="font-body-md">Bank Reconciliation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-body-md">Financial Statements</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="font-body-md">Tax &amp; Compliance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="cloud_upload">cloud_upload</span>
+<span class="font-body-md">Uploads &amp; Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-body-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary text-on-primary rounded-lg font-bold active-nav-shadow scale-[0.98] transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+<span class="font-body-md">Chat &amp; Support</span>
+</a>
+<div class="mt-4 p-3 bg-surface-container-low rounded-xl">
+<p class="text-label-bold font-label-bold text-primary mb-1">EBSPL Support</p>
+<p class="text-[11px] text-outline">Need help with bookkeeping?</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col min-w-0 bg-surface overflow-hidden">
+<!-- TopNavBar -->
+<header class="docked top-0 w-full h-16 bg-surface flex items-center justify-between px-container-padding z-10">
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-body-md focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all" placeholder="Search transactions, clients..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-1"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-label-bold font-label-bold text-on-surface">John Smith</p>
+<p class="text-[10px] text-outline">Senior Accountant</p>
+</div>
+<img alt="John Smith" class="w-9 h-9 rounded-full border-2 border-primary-container" data-alt="A professional close-up headshot of a middle-aged male executive in a sleek, modern office environment. He wears a tailored navy blazer and has a confident, approachable expression. The background is softly blurred with hints of glass and steel architecture, bathed in bright, clean, natural light. The aesthetic is corporate and high-end, aligning with a premium financial services platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwgwH6mtvJpomGCuy1SZGJ3VLjUZO82hlAkgrtPU8hOR8yNMd7NQgs11VQ1s08QpbTtS5LvzpxU5cKzG4ldD19XN0X5_7NdS7ZCaxqccmY48bmfSg-wAEzj2OzKWvXp1Q61_7Z_KmO1EciRYQf7j5wgkzRcqyqcU-YI-p5LzqV27F8__TtPKaGwkeyfHKBm30qzVd7QVlJsxCEjx2npl3R5OVOCV-4fJUYHpzZgRgSDVPJsTbhuMtCBgMpvbyaIEFZwmPjye3QX3E"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<main class="flex-1 overflow-y-auto p-container-padding">
+<div class="max-w-6xl mx-auto">
+<!-- Page Header -->
+<div class="mb-8">
+<h2 class="text-display-lg font-display-lg text-primary">Settings</h2>
+<p class="text-body-md text-outline">Configure your account preferences and system parameters.</p>
+</div>
+<!-- Layout Container -->
+<div class="flex flex-col md:flex-row gap-gutter">
+<!-- Settings Sidebar (Categories) -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings_suggest</span>
+<span class="font-label-bold text-label-bold">General</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-bold text-label-bold">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg transition-colors shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">corporate_fare</span>
+<span class="font-label-bold text-label-bold">Organization</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">group_add</span>
+<span class="font-label-bold text-label-bold">Users &amp; Permissions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">credit_card</span>
+<span class="font-label-bold text-label-bold">Subscription</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-label-bold text-label-bold">Notifications</span>
+</a>
+</nav>
+</aside>
+<!-- Settings Form Content -->
+<div class="flex-1 min-w-0">
+<div class="settings-card bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/30">
+<div class="flex items-start justify-between mb-8 pb-6 border-b border-outline-variant">
+<div>
+<h3 class="text-headline-md font-headline-md text-primary mb-1">Organization Settings</h3>
+<p class="text-body-md text-outline">Manage your business profile and global preferences.</p>
+</div>
+<div class="h-14 w-14 bg-surface-container flex items-center justify-center rounded-xl overflow-hidden">
+<img alt="EBSPL Cloud Accounting Services Logo" class="w-10 h-10 object-contain" data-alt="A minimalist and modern corporate logo featuring abstract geometric shapes that suggest growth and data flow. The color scheme is a professional deep treasury purple and electric violet. The design is clean, vector-style, and centered on a soft gray background, representing a sophisticated cloud-based financial technology company." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChe2RaeAxXox3OatC_Vvxcbfcuet9vkSjQQ0UfO-B9mC6NjdvDJq7Er5AG66jSNRcm_CpfoT-X-o6L1QirphkTRoDfoh0hTrZBFz55G43D01p9t0P7GrRu4VbgFFfzuazrvynak8WX4m-5aQLp2tjUL1pvVYvUjKjK5QDGSES9M9byuBufcZ1jRwF53rHD4JP1Ie5sTSi54VqKVBqfnCuopjBT9amJtPdysjcZgA1g3kGyvfMS3MujR6Rww3FfA0_TsvtBO2Q6oxk"/>
+</div>
+</div>
+<form class="space-y-10">
+<!-- Business Information -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-xl">info</span>
+<h4 class="text-title-sm font-title-sm text-on-surface">Business Information</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Business Name</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all" type="text" value="EBSPL"/>
+</div>
+<div class="space-y-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Legal Type</label>
+<select class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+<option>Private Limited Company</option>
+<option>Sole Proprietorship</option>
+<option>Partnership</option>
+<option>Non-Profit</option>
+</select>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Registration Number</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="e.g. 12345678" type="text"/>
+</div>
+</div>
+</section>
+<!-- Contact Details -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-xl">contact_mail</span>
+<h4 class="text-title-sm font-title-sm text-on-surface">Contact Details</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Email Address</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all" type="email" value="finance@ebspl.com"/>
+</div>
+<div class="space-y-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Phone Number</label>
+<input class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all" type="tel" value="+44 20 7946 0123"/>
+</div>
+<div class="space-y-2 md:col-span-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Registered Address</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all" rows="3">123 Financial Plaza, Canary Wharf, London, E14 5AB, United Kingdom</textarea>
+</div>
+</div>
+</section>
+<!-- Financial Year & Localization -->
+<section>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-xl">schedule</span>
+<h4 class="text-title-sm font-title-sm text-on-surface">Financial &amp; Localization</h4>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Financial Year Start</label>
+<select class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+<option>January</option>
+<option>April</option>
+<option selected="">July</option>
+<option>October</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Tax Year Settings</label>
+<select class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+<option>Standard (Accrual)</option>
+<option>Cash Basis</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Default Currency</label>
+<select class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+<option selected="">GBP - British Pound</option>
+<option>USD - US Dollar</option>
+<option>EUR - Euro</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="block text-label-bold font-label-bold text-on-surface-variant ml-1">Timezone</label>
+<select class="w-full bg-surface border border-outline-variant rounded-lg p-3 text-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+<option selected="">(GMT+00:00) London</option>
+<option>(GMT+01:00) Paris</option>
+<option>(GMT-05:00) New York</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Form Actions -->
+<div class="flex items-center justify-end gap-4 pt-8 mt-10 border-t border-outline-variant">
+<button class="px-6 py-2.5 rounded-lg border border-primary text-primary font-label-bold text-label-bold hover:bg-primary/5 transition-all" type="button">
+                                            Discard Changes
+                                        </button>
+<button class="px-8 py-2.5 rounded-lg bg-primary text-on-primary font-label-bold text-label-bold hover:bg-[#1a0847] active:scale-[0.98] transition-all shadow-md shadow-primary/20" type="submit">
+                                            Save Changes
+                                        </button>
+</div>
+</form>
+</div>
+<!-- Decorative Help Card -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-primary p-6 rounded-xl relative overflow-hidden group">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-inverse-primary text-3xl mb-3">security</span>
+<h5 class="text-white font-title-sm text-title-sm mb-1">Data Privacy</h5>
+<p class="text-on-primary-container text-body-sm">Your financial information is protected by bank-grade 256-bit encryption.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-9xl">lock</span>
+</div>
+</div>
+<div class="bg-tertiary-container p-6 rounded-xl relative overflow-hidden group border border-outline-variant/10">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-3xl mb-3">help_center</span>
+<h5 class="text-white font-title-sm text-title-sm mb-1">Need Assistance?</h5>
+<p class="text-on-tertiary-container text-body-sm">Contact our compliance specialists for help setting up your entity.</p>
+</div>
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-9xl">support_agent</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+<script src="../profiles.js"></script>
+<script src="../auth.js"></script></body></html>

@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script>if(!localStorage.getItem('ebspl_user'))window.location.replace('../login_ebspl_2/code.html');</script>
+    <title>EBSPL Cloud Accounting - Enterprise Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="../profiles.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                primary: "#ec5b13",
+                'primary-dark': "#d44d0d",
+                surface: "#f1fbff",
+                outline: "#797583",
+                'outline-variant': "#cac4d3",
+                "on-surface-variant": "#484551",
+              },
+              fontFamily: {
+                sans: ['Public Sans', 'Inter', 'sans-serif'],
+                display: ['Manrope', 'sans-serif'],
+              }
+            }
+          }
+        };
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Public Sans', sans-serif; background-color: #f1fbff; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cac4d3; border-radius: 10px; }
+        .sidebar-active { background-color: #ec5b13 !important; color: white !important; }
+        @keyframes ebsplFadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        .ebspl-modal-enter { animation: ebsplFadeIn .2s ease; }
+        @keyframes ebsplSlide { from{transform:translateX(110%);opacity:0} to{transform:translateX(0);opacity:1} }
+    </style>
+</head>
+<body class="bg-surface text-slate-900">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useContext, createContext, useRef } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        /* ─── Auth helpers ─── */
+        const AUTH_KEY = 'ebspl_user';
+        const getStoredUser = () => { try { return JSON.parse(localStorage.getItem(AUTH_KEY)); } catch (e) { return null; } };
+        const saveUser = (u) => localStorage.setItem(AUTH_KEY, JSON.stringify(u));
+        const clearUser = () => localStorage.removeItem(AUTH_KEY);
+
+        /* ─── Auth Context ─── */
+        const AuthCtx = createContext(null);
+
+        /* ─── Profile-aware mock data ─── */
+        function getProfileData(user) {
+            var fallback = {
+                invoices: [
+                    { id: 'INV-2024-084', client: 'Acme Solutions Ltd', initials: 'AS', date: 'Oct 12, 2024', due: 'Oct 26, 2024', amount: '£1,250.00', status: 'Paid', color: 'bg-emerald-100 text-emerald-700' },
+                    { id: 'INV-2024-085', client: 'Bright Retail Ltd', initials: 'BR', date: 'Oct 14, 2024', due: 'Oct 28, 2024', amount: '£620.00', status: 'Sent', color: 'bg-blue-100 text-blue-700' },
+                    { id: 'INV-2024-086', client: 'Nova Systems', initials: 'NS', date: 'Sep 28, 2024', due: 'Oct 12, 2024', amount: '£580.00', status: 'Overdue', color: 'bg-red-100 text-red-700' }
+                ],
+                contacts: [
+                    { name: 'Alex Henderson', initials: 'AH', company: 'Henderson & Co.', email: 'alex@henderson.io', phone: '+44 7700 900005', last: 'Oct 24, 2024', status: 'Active' },
+                    { name: 'Sarah Chen', initials: 'SC', company: 'EBSPL', email: 's.chen@gmail.com', phone: '+44 20 7946 0325', last: 'Oct 22, 2024', status: 'Admin' }
+                ],
+                expenses: [
+                    { desc: 'AWS Cloud Services', cat: 'Tech', amount: '-£84.50', date: 'Oct 20, 2024', status: 'Approved' },
+                    { desc: 'Office Supplies', cat: 'Operations', amount: '-£45.00', date: 'Oct 19, 2024', status: 'Pending' },
+                    { desc: 'Client Lunch', cat: 'Entertainment', amount: '-£78.20', date: 'Oct 18, 2024', status: 'Approved' }
+                ],
+                transactions: [
+                    { t: 'Invoice Payment', amt: '+£1,250.00', date: 'Oct 26', s: 'Matched' },
+                    { t: 'AWS Services', amt: '-£84.50', date: 'Oct 20', s: 'Matched' },
+                    { t: 'Office Supplies', amt: '-£45.00', date: 'Oct 19', s: 'Pending' },
+                    { t: 'Client Lunch', amt: '-£78.20', date: 'Oct 18', s: 'Matched' }
+                ],
+                stats: { balance: '£12,450.00', outstanding: '£3,870.50', payables: '£1,290.75', profit: '£8,920.00' }
+            };
+            if (!user) return fallback;
+            var prof = window.EBSPL_PROFILES && window.EBSPL_PROFILES.getByEmail(user.email);
+            if (!prof || !prof.data) return fallback;
+            return {
+                invoices: prof.data.invoices && prof.data.invoices.length ? prof.data.invoices : fallback.invoices,
+                contacts: prof.data.contacts && prof.data.contacts.length ? prof.data.contacts : fallback.contacts,
+                expenses: prof.data.expenses && prof.data.expenses.length ? prof.data.expenses : fallback.expenses,
+                transactions: prof.data.transactions && prof.data.transactions.length ? prof.data.transactions : fallback.transactions,
+                stats: prof.data.stats ? {
+                    balance: prof.data.stats.balance || fallback.stats.balance,
+                    outstanding: prof.data.stats.outstanding || fallback.stats.outstanding,
+                    payables: prof.data.stats.payables || '£0',
+                    profit: prof.data.stats.profit || fallback.stats.profit
+                } : fallback.stats
+            };
+        }
+
+        /* ─── Toast ─── */
+        const ToastCtx = createContext(null);
+        const ToastProvider = ({ children }) => {
+            const [toasts, setToasts] = useState([]);
+            const push = (msg, type = 'success') => {
+                const id = Date.now();
+                setToasts(t => [...t, { id, msg, type }]);
+                setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 3200);
+            };
+            const colors = { success: '#10b981', error: '#ef4444', info: '#3b82f6', warn: '#f59e0b' };
+            return (
+                <ToastCtx.Provider value={push}>
+                    {children}
+                    <div style={{position:'fixed',top:20,right:20,zIndex:99999,display:'flex',flexDirection:'column',gap:8}}>
+                        {toasts.map(t => (
+                            <div key={t.id} style={{background:colors[t.type]||colors.success,color:'#fff',padding:'12px 18px',borderRadius:10,fontWeight:600,fontSize:13,boxShadow:'0 4px 16px rgba(0,0,0,.15)',maxWidth:320,animation:'ebsplSlide .2s ease'}}>
+                                {t.msg}
+                            </div>
+                        ))}
+                    </div>
+                </ToastCtx.Provider>
+            );
+        };
+        const useToast = () => useContext(ToastCtx);
+
+        /* ─── Modal ─── */
+        const Modal = ({ title, children, onClose, onConfirm, confirmLabel = 'Confirm', wide = false }) => (
+            <div className="fixed inset-0 bg-black/50 z-[9000] flex items-center justify-center p-4" onClick={e => e.target === e.currentTarget && onClose()}>
+                <div className={`bg-white rounded-2xl shadow-2xl ebspl-modal-enter ${wide ? 'w-full max-w-2xl' : 'w-full max-w-md'} max-h-[90vh] overflow-y-auto`}>
+                    <div className="flex items-center justify-between p-6 border-b border-slate-100">
+                        <h2 className="text-lg font-bold">{title}</h2>
+                        <button onClick={onClose} className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100">
+                            <span className="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                    <div className="p-6">{children}</div>
+                    {onConfirm && (
+                        <div className="flex gap-3 justify-end px-6 pb-6">
+                            <button onClick={onClose} className="px-5 py-2.5 border border-slate-200 rounded-lg font-semibold text-sm">Cancel</button>
+                            <button onClick={onConfirm} className="px-6 py-2.5 bg-primary text-white rounded-lg font-bold text-sm hover:bg-primary-dark">{confirmLabel}</button>
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+
+        /* ─── Sidebar ─── */
+        const Sidebar = ({ onLogout }) => {
+            const location = useLocation();
+            const menuItems = [
+                { path: '/', label: 'Dashboard', icon: 'dashboard' },
+                { path: '/clients', label: 'Clients & Contacts', icon: 'group' },
+                { path: '/invoicing', label: 'Invoicing & Billing', icon: 'receipt_long' },
+                { path: '/expenses', label: 'Expenses & Payables', icon: 'payments' },
+                { path: '/reconciliation', label: 'Bank Reconciliation', icon: 'account_balance' },
+                { path: '/statements', label: 'Financial Statements', icon: 'description' },
+                { path: '/tax', label: 'Tax & Compliance', icon: 'assignment_turned_in' },
+                { path: '/uploads', label: 'Uploads & Documents', icon: 'cloud_upload' },
+                { path: '/reports', label: 'Reports', icon: 'analytics' },
+                { path: '/settings', label: 'Settings', icon: 'settings' },
+            ];
+            return (
+                <aside className="fixed left-0 h-full w-64 bg-white border-r border-slate-200 flex flex-col py-6 px-4 gap-2 z-50">
+                    <div className="flex flex-col gap-1 mb-8 px-2">
+                        <h1 className="text-2xl font-bold text-primary">EBSPL</h1>
+                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Cloud Accounting</span>
+                    </div>
+                    <nav className="flex flex-col gap-1 overflow-y-auto flex-grow custom-scrollbar">
+                        {menuItems.map((item) => (
+                            <Link key={item.path} to={item.path}
+                                className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 ${location.pathname === item.path ? 'sidebar-active shadow-md' : 'text-slate-600 hover:bg-slate-100'}`}>
+                                <span className="material-symbols-outlined">{item.icon}</span>
+                                <span className="text-sm font-semibold">{item.label}</span>
+                            </Link>
+                        ))}
+                    </nav>
+                    <div className="mt-auto pt-4 border-t border-slate-200 flex flex-col gap-1">
+                        <Link to="/chat" className={`flex items-center gap-3 px-3 py-2 rounded-lg ${location.pathname === '/chat' ? 'sidebar-active' : 'text-slate-600 hover:bg-slate-100'}`}>
+                            <span className="material-symbols-outlined">chat</span>
+                            <span className="text-sm font-semibold">Chat & Support</span>
+                        </Link>
+                        <button onClick={onLogout} className="flex items-center gap-3 px-3 py-2 rounded-lg text-red-500 hover:bg-red-50 transition-colors w-full text-left">
+                            <span className="material-symbols-outlined">logout</span>
+                            <span className="text-sm font-semibold">Sign Out</span>
+                        </button>
+                    </div>
+                </aside>
+            );
+        };
+
+        /* ─── TopBar ─── */
+        const TopBar = ({ user, onLogout }) => {
+            const [dropOpen, setDropOpen] = useState(false);
+            const ref = useRef(null);
+            useEffect(() => {
+                const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setDropOpen(false); };
+                document.addEventListener('mousedown', handler);
+                return () => document.removeEventListener('mousedown', handler);
+            }, []);
+            const initial = user ? (user.initial || (user.name ? user.name.split(' ').map(function(w){return w[0];}).join('').toUpperCase().slice(0,2) : '?')) : '?';
+            return (
+                <header className="h-16 flex items-center justify-between px-8 w-full bg-white border-b border-slate-200 sticky top-0 z-40">
+                    <div className="flex items-center gap-4 flex-1">
+                        <div className="relative w-80 max-w-full">
+                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                            <input className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary text-sm outline-none" placeholder="Search everything..." type="text" />
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4" ref={ref}>
+                        <button className="p-2 text-slate-500 hover:text-primary relative">
+                            <span className="material-symbols-outlined">notifications</span>
+                            <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full border-2 border-white"></span>
+                        </button>
+                        <button className="p-2 text-slate-500 hover:text-primary">
+                            <span className="material-symbols-outlined">help</span>
+                        </button>
+                        <div className="h-8 w-px bg-slate-200 mx-1"></div>
+                        <div className="relative">
+                            <button onClick={() => setDropOpen(d => !d)} className="flex items-center gap-3 rounded-lg px-2 py-1 hover:bg-slate-50 transition-colors">
+                                <div className="text-right hidden sm:block">
+                                    <p className="text-sm font-bold text-slate-900 leading-tight">{(user && user.name) || 'User'}</p>
+                                    <p className="text-xs text-slate-500 leading-tight">{(user && user.role) || 'Guest'}</p>
+                                </div>
+                                <div className="w-9 h-9 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center font-bold text-sm text-primary">
+                                    {initial}
+                                </div>
+                                <span className="material-symbols-outlined text-slate-400 text-lg">arrow_drop_down</span>
+                            </button>
+                            {dropOpen && (
+                                <div className="absolute right-0 top-full mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-xl z-50 overflow-hidden">
+                                    <div className="px-4 py-3 border-b border-slate-100">
+                                        <p className="font-bold text-sm">{user && user.name}</p>
+                                        <p className="text-xs text-slate-500 truncate">{user && user.email}</p>
+                                        {user && user.loginMethod && <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold uppercase mt-1 inline-block">{user.loginMethod === 'google' ? 'Google' : user.loginMethod === 'sso' ? 'SSO' : 'Password'}</span>}
+                                    </div>
+                                    <Link to="/settings" onClick={() => setDropOpen(false)} className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 text-sm text-slate-700">
+                                        <span className="material-symbols-outlined text-lg">manage_accounts</span> Profile & Settings
+                                    </Link>
+                                    <button onClick={onLogout} className="flex items-center gap-3 px-4 py-2.5 hover:bg-red-50 text-sm text-red-500 w-full text-left">
+                                        <span className="material-symbols-outlined text-lg">logout</span> Sign Out
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        /* ─── Layout ─── */
+        const Layout = ({ children, user, onLogout }) => (
+            <div className="flex min-h-screen">
+                <Sidebar onLogout={onLogout} />
+                <main className="flex-1 ml-64 min-h-screen flex flex-col">
+                    <TopBar user={user} onLogout={onLogout} />
+                    <div className="p-8">{children}</div>
+                </main>
+            </div>
+        );
+
+        /* ─── Dashboard Page ─── */
+        const DashboardPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const [showQuick, setShowQuick] = useState(false);
+            const firstName = (user && user.name) ? user.name.split(' ')[0] : 'there';
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    {showQuick && (
+                        <Modal title="Quick Action" onClose={() => setShowQuick(false)}>
+                            <div className="grid grid-cols-2 gap-3">
+                                {[['receipt_long','Create Invoice','/invoicing'],['payments','Add Expense','/expenses'],['group','Add Contact','/clients'],['cloud_upload','Upload File','/uploads']].map(([icon,label,path]) => (
+                                    <Link key={label} to={path} onClick={() => setShowQuick(false)}
+                                        className="flex flex-col items-center gap-2 p-4 border border-slate-200 rounded-xl hover:border-primary hover:bg-primary/5 transition-all cursor-pointer">
+                                        <span className="material-symbols-outlined text-primary text-3xl">{icon}</span>
+                                        <span className="text-sm font-bold">{label}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        </Modal>
+                    )}
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h2 className="text-3xl font-bold">Dashboard</h2>
+                                <p className="text-slate-500">Welcome back, {firstName}! Here's your overview.</p>
+                            </div>
+                            <button onClick={() => setShowQuick(true)} className="bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary-dark transition-all shadow-lg flex items-center gap-2">
+                                <span className="material-symbols-outlined">add</span> Quick Action
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            {[
+                                { label: 'Total Cash Balance', value: getProfileData(user).stats.balance, change: '+12.5%', icon: 'wallet', color: 'text-blue-600', bg: 'bg-blue-50' },
+                                { label: 'Outstanding Receivables', value: getProfileData(user).stats.outstanding, change: '+4.2%', icon: 'receipt_long', color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                                { label: 'Payables Due', value: getProfileData(user).stats.payables, change: '-2.1%', icon: 'payments', color: 'text-red-600', bg: 'bg-red-50' },
+                                { label: 'Net Profit (YTD)', value: getProfileData(user).stats.profit, change: '+11.8%', icon: 'trending_up', color: 'text-emerald-600', bg: 'bg-emerald-50' },
+                            ].map((stat, i) => (
+                                <div key={i} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition-shadow" onClick={() => toast(stat.label + ': ' + stat.value, 'info')}>
+                                    <div className="flex items-center gap-4 mb-4">
+                                        <div className={`w-12 h-12 ${stat.bg} rounded-lg flex items-center justify-center ${stat.color}`}>
+                                            <span className="material-symbols-outlined">{stat.icon}</span>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">{stat.label}</p>
+                                            <h3 className="text-xl font-bold">{stat.value}</h3>
+                                        </div>
+                                    </div>
+                                    <span className={`text-xs font-bold px-2 py-1 rounded ${stat.change.startsWith('+') ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
+                                        {stat.change} vs last month
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="grid grid-cols-12 gap-8">
+                            <div className="col-span-12 lg:col-span-8 bg-white p-6 rounded-xl border border-slate-200 shadow-sm min-h-[360px]">
+                                <div className="flex justify-between items-center mb-6">
+                                    <h3 className="text-lg font-bold">Revenue & Cash Flow</h3>
+                                    <select className="text-sm border border-slate-200 rounded-lg px-3 py-1.5 outline-none" onChange={e => toast('Filtering by: ' + e.target.value, 'info')}>
+                                        <option>Last 6 months</option><option>Last 12 months</option><option>This Year</option>
+                                    </select>
+                                </div>
+                                <div className="h-56 flex items-end justify-between px-4 border-b border-slate-100">
+                                    {[100, 140, 110, 130, 120, 150].map((h, i) => (
+                                        <div key={i} className="flex flex-col items-center gap-2 w-1/6 cursor-pointer group" onClick={() => toast('Month ' + (i+1) + ': £' + (h * 85).toLocaleString(), 'info')}>
+                                            <div className="flex items-end gap-1 w-full justify-center group-hover:opacity-80">
+                                                <div className="w-4 bg-primary rounded-t transition-all" style={{height: h}}></div>
+                                                <div className="w-4 bg-slate-300 rounded-t transition-all" style={{height: h*0.6}}></div>
+                                            </div>
+                                            <span className="text-[10px] text-slate-400">M{i+1}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex gap-4 mt-4">
+                                    <div className="flex items-center gap-2"><div className="w-3 h-3 bg-primary rounded"></div><span className="text-xs text-slate-500">Income</span></div>
+                                    <div className="flex items-center gap-2"><div className="w-3 h-3 bg-slate-300 rounded"></div><span className="text-xs text-slate-500">Expenses</span></div>
+                                </div>
+                            </div>
+                            <div className="col-span-12 lg:col-span-4 space-y-6">
+                                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                    <h3 className="text-lg font-bold mb-4">Recent Activity</h3>
+                                    <div className="space-y-4">
+                                        {[
+                                            { t: 'Invoice Paid', d: 'Acme Solutions Ltd', v: '+£1,250', i: 'check_circle', c: 'text-emerald-500' },
+                                            { t: 'Bank Reconciled', d: '28 transactions', v: '', i: 'sync', c: 'text-blue-500' },
+                                            { t: 'Receipt Uploaded', d: 'Office Supplies', v: '', i: 'description', c: 'text-indigo-500' },
+                                        ].map((act, i) => (
+                                            <div key={i} className="flex gap-4 items-start cursor-pointer hover:bg-slate-50 p-2 rounded-lg -m-2" onClick={() => toast(act.t + ' — ' + act.d, 'info')}>
+                                                <span className={`material-symbols-outlined ${act.c}`}>{act.i}</span>
+                                                <div className="flex-1">
+                                                    <p className="text-sm font-bold">{act.t}</p>
+                                                    <p className="text-xs text-slate-500">{act.d}</p>
+                                                </div>
+                                                <span className="text-sm font-bold text-emerald-600">{act.v}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Clients Page ─── */
+        const ClientsPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const [contacts, setContacts] = useState(() => getProfileData(user).contacts);
+            const [showAdd, setShowAdd] = useState(false);
+            const [showDetail, setShowDetail] = useState(null);
+            const [form, setForm] = useState({ name: '', company: '', email: '', phone: '', status: 'Active' });
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    {showAdd && (
+                        <Modal title="Add New Contact" onClose={() => setShowAdd(false)} onConfirm={() => {
+                            if (!form.name) { toast('Name is required', 'error'); return; }
+                            const initials = form.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+                            setContacts(c => [...c, { ...form, initials, last: new Date().toLocaleDateString('en-GB', {month:'short',day:'numeric',year:'numeric'}) }]);
+                            setShowAdd(false); setForm({ name:'',company:'',email:'',phone:'',status:'Active' });
+                            toast('Contact added: ' + form.name, 'success');
+                        }} confirmLabel="Add Contact">
+                            <div className="space-y-4">
+                                {[['Full Name','name','text'],['Company','company','text'],['Email','email','email'],['Phone','phone','tel']].map(([label,key,type]) => (
+                                    <div key={key}>
+                                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1">{label}</label>
+                                        <input type={type} value={form[key]} onChange={e => setForm(f => ({...f,[key]:e.target.value}))}
+                                            className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" placeholder={label} />
+                                    </div>
+                                ))}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Status</label>
+                                    <select value={form.status} onChange={e => setForm(f => ({...f,status:e.target.value}))} className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none">
+                                        <option>Active</option><option>Enterprise</option><option>Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </Modal>
+                    )}
+                    {showDetail && (
+                        <Modal title={showDetail.name} onClose={() => setShowDetail(null)} onConfirm={() => { toast('Email sent to ' + showDetail.email, 'success'); setShowDetail(null); }} confirmLabel="Send Email">
+                            <div className="space-y-3 text-sm">
+                                <div className="flex gap-3 items-center mb-4">
+                                    <div className="w-14 h-14 rounded-full bg-primary/10 text-primary font-bold text-xl flex items-center justify-center">{showDetail.initials}</div>
+                                    <div><p className="font-bold text-lg">{showDetail.name}</p><p className="text-slate-500">{showDetail.company}</p></div>
+                                </div>
+                                {[['Email',showDetail.email],['Phone',showDetail.phone],['Last Activity',showDetail.last],['Status',showDetail.status]].map(([l,v]) => (
+                                    <div key={l} className="flex justify-between py-2 border-b border-slate-100"><span className="text-slate-500 font-medium">{l}</span><span className="font-semibold">{v}</span></div>
+                                ))}
+                            </div>
+                        </Modal>
+                    )}
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center">
+                            <div><h2 className="text-3xl font-bold">Clients & Contacts</h2><p className="text-slate-500">Manage your business relationships.</p></div>
+                            <button onClick={() => setShowAdd(true)} className="bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary-dark transition-all">
+                                <span className="material-symbols-outlined mr-1 text-lg align-middle">person_add</span> Add New Contact
+                            </button>
+                        </div>
+                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                            <table className="w-full text-left">
+                                <thead className="bg-slate-50">
+                                    <tr>{['Name','Company','Email','Phone','Status','Action'].map(h => <th key={h} className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{h}</th>)}</tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-100">
+                                    {contacts.map((c, i) => (
+                                        <tr key={i} className="hover:bg-slate-50 cursor-pointer transition-colors" onClick={() => setShowDetail(c)}>
+                                            <td className="px-6 py-4"><div className="flex items-center gap-3"><div className="w-10 h-10 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center">{c.initials}</div><span className="font-semibold">{c.name}</span></div></td>
+                                            <td className="px-6 py-4 text-sm text-slate-600">{c.company}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-600">{c.email}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-600">{c.phone}</td>
+                                            <td className="px-6 py-4"><span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold">{c.status}</span></td>
+                                            <td className="px-6 py-4" onClick={e => e.stopPropagation()}>
+                                                <button onClick={() => { setContacts(cs => cs.filter((_,j) => j!==i)); toast('Contact removed','warn'); }} className="text-xs text-red-500 hover:underline">Remove</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Invoicing Page ─── */
+        const InvoicingPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const [invoices, setInvoices] = useState(() => getProfileData(user).invoices);
+            const [showCreate, setShowCreate] = useState(false);
+            const [form, setForm] = useState({ client:'', amount:'', due:'' });
+            const nextId = () => 'INV-2024-' + String(100 + invoices.length).padStart(3,'0');
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    {showCreate && (
+                        <Modal title="Create New Invoice" onClose={() => setShowCreate(false)} onConfirm={() => {
+                            if (!form.client || !form.amount) { toast('Client and amount are required', 'error'); return; }
+                            const initials = form.client.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+                            setInvoices(inv => [...inv, { id: nextId(), client: form.client, initials, date: new Date().toLocaleDateString('en-GB',{month:'short',day:'numeric',year:'numeric'}), due: form.due || 'TBD', amount: '£' + parseFloat(form.amount || 0).toFixed(2), status: 'Draft', color: 'bg-slate-100 text-slate-700' }]);
+                            setShowCreate(false); setForm({client:'',amount:'',due:''});
+                            toast('Invoice created: ' + nextId(), 'success');
+                        }} confirmLabel="Create Invoice">
+                            <div className="space-y-4">
+                                <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Client Name</label><input value={form.client} onChange={e => setForm(f=>({...f,client:e.target.value}))} className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" placeholder="Acme Solutions Ltd" /></div>
+                                <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Amount (£)</label><input type="number" value={form.amount} onChange={e => setForm(f=>({...f,amount:e.target.value}))} className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" placeholder="0.00" /></div>
+                                <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Due Date</label><input type="date" value={form.due} onChange={e => setForm(f=>({...f,due:e.target.value}))} className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" /></div>
+                            </div>
+                        </Modal>
+                    )}
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center">
+                            <div><h2 className="text-3xl font-bold">Invoicing & Billing</h2><p className="text-slate-500">Manage client billing cycles.</p></div>
+                            <button onClick={() => setShowCreate(true)} className="bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary-dark transition-all">
+                                <span className="material-symbols-outlined mr-1 text-lg align-middle">add</span> Create New Invoice
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {[{l:'Total Sent',v:'£' + invoices.reduce((s,i)=>s+parseFloat(i.amount.replace(/[^0-9.]/g,'')),0).toFixed(2),c:''},
+                              {l:'Paid',v:'£' + invoices.filter(i=>i.status==='Paid').reduce((s,i)=>s+parseFloat(i.amount.replace(/[^0-9.]/g,'')),0).toFixed(2),c:'text-emerald-600'},
+                              {l:'Overdue',v:'£' + invoices.filter(i=>i.status==='Overdue').reduce((s,i)=>s+parseFloat(i.amount.replace(/[^0-9.]/g,'')),0).toFixed(2),c:'text-red-600'}].map((s,i) => (
+                                <div key={i} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><p className="text-xs font-bold text-slate-500 uppercase mb-2">{s.l}</p><h3 className={`text-2xl font-bold ${s.c}`}>{s.v}</h3></div>
+                            ))}
+                        </div>
+                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                            <table className="w-full text-left">
+                                <thead className="bg-slate-50"><tr>{['Invoice #','Client','Due Date','Amount','Status','Action'].map(h => <th key={h} className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{h}</th>)}</tr></thead>
+                                <tbody className="divide-y divide-slate-100">
+                                    {invoices.map((inv, i) => (
+                                        <tr key={i} className="hover:bg-slate-50 cursor-pointer" onClick={() => toast('Invoice ' + inv.id + ' — ' + inv.client + ' — ' + inv.amount, 'info')}>
+                                            <td className="px-6 py-4 font-semibold text-primary">{inv.id}</td>
+                                            <td className="px-6 py-4 font-semibold">{inv.client}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-500">{inv.due}</td>
+                                            <td className="px-6 py-4 text-right font-bold">{inv.amount}</td>
+                                            <td className="px-6 py-4 text-right"><span className={`px-3 py-1 rounded-full text-xs font-bold ${inv.color}`}>{inv.status}</span></td>
+                                            <td className="px-6 py-4" onClick={e => e.stopPropagation()}>
+                                                <button onClick={() => { setInvoices(invs => invs.map((x,j) => j===i ? {...x, status:'Paid', color:'bg-emerald-100 text-emerald-700'} : x)); toast('Marked as Paid: ' + inv.id, 'success'); }} className="text-xs text-emerald-600 hover:underline mr-2">Mark Paid</button>
+                                                <button onClick={() => { toast('Download started for ' + inv.id, 'info'); }} className="text-xs text-primary hover:underline">Download</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Expenses Page ─── */
+        const ExpensesPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const [expenses, setExpenses] = useState(() => getProfileData(user).expenses);
+            const [showAdd, setShowAdd] = useState(false);
+            const [form, setForm] = useState({ desc:'', cat:'Tech', amount:'', date: new Date().toISOString().split('T')[0] });
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    {showAdd && (
+                        <Modal title="Add Expense" onClose={() => setShowAdd(false)} onConfirm={() => {
+                            if (!form.desc || !form.amount) { toast('Description and amount are required', 'error'); return; }
+                            setExpenses(ex => [...ex, { desc: form.desc, cat: form.cat, amount: '-£' + parseFloat(form.amount).toFixed(2), date: form.date, status: 'Pending' }]);
+                            setShowAdd(false); setForm({desc:'',cat:'Tech',amount:'',date:new Date().toISOString().split('T')[0]});
+                            toast('Expense added: ' + form.desc, 'success');
+                        }} confirmLabel="Add Expense">
+                            <div className="space-y-4">
+                                <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Description</label><input value={form.desc} onChange={e=>setForm(f=>({...f,desc:e.target.value}))} className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" placeholder="Office Supplies" /></div>
+                                <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Category</label>
+                                    <select value={form.cat} onChange={e=>setForm(f=>({...f,cat:e.target.value}))} className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none">
+                                        {['Tech','Operations','Entertainment','Travel','Marketing'].map(c=><option key={c}>{c}</option>)}
+                                    </select>
+                                </div>
+                                <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Amount (£)</label><input type="number" value={form.amount} onChange={e=>setForm(f=>({...f,amount:e.target.value}))} className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" placeholder="0.00" /></div>
+                                <div><label className="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label><input type="date" value={form.date} onChange={e=>setForm(f=>({...f,date:e.target.value}))} className="w-full border border-slate-200 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" /></div>
+                            </div>
+                        </Modal>
+                    )}
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center">
+                            <div><h2 className="text-3xl font-bold">Expenses & Payables</h2><p className="text-slate-500">Track business expenditures.</p></div>
+                            <button onClick={() => setShowAdd(true)} className="bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary-dark transition-all">
+                                <span className="material-symbols-outlined mr-1 text-lg align-middle">add</span> Add Expense
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {[{l:'Total (MTD)',v:'£'+expenses.reduce((s,e)=>s+parseFloat(e.amount.replace(/[^0-9.]/g,'')),0).toFixed(2),c:'text-primary'},
+                              {l:'Pending Approval',v:expenses.filter(e=>e.status==='Pending').length+' Items',c:'text-indigo-600'},
+                              {l:'Approved',v:expenses.filter(e=>e.status==='Approved').length+' Items',c:'text-emerald-600'}].map((s,i) => (
+                                <div key={i} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><p className="text-xs font-bold text-slate-500 uppercase mb-2">{s.l}</p><h3 className={`text-2xl font-bold ${s.c}`}>{s.v}</h3></div>
+                            ))}
+                        </div>
+                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                            <table className="w-full text-left">
+                                <thead className="bg-slate-50"><tr>{['Description','Category','Date','Amount','Status','Action'].map(h => <th key={h} className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{h}</th>)}</tr></thead>
+                                <tbody className="divide-y divide-slate-100">
+                                    {expenses.map((ex, i) => (
+                                        <tr key={i} className="hover:bg-slate-50">
+                                            <td className="px-6 py-4 font-semibold">{ex.desc}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-600">{ex.cat}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-500">{ex.date}</td>
+                                            <td className="px-6 py-4 font-bold text-red-600">{ex.amount}</td>
+                                            <td className="px-6 py-4"><span className={`px-3 py-1 rounded-full text-xs font-bold ${ex.status==='Approved'?'bg-emerald-100 text-emerald-700':'bg-amber-100 text-amber-700'}`}>{ex.status}</span></td>
+                                            <td className="px-6 py-4">
+                                                {ex.status === 'Pending' && <button onClick={() => { setExpenses(exs => exs.map((x,j) => j===i?{...x,status:'Approved'}:x)); toast('Expense approved','success'); }} className="text-xs text-emerald-600 hover:underline mr-2">Approve</button>}
+                                                <button onClick={() => { setExpenses(exs => exs.filter((_,j) => j!==i)); toast('Expense removed','warn'); }} className="text-xs text-red-500 hover:underline">Remove</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Reconciliation Page ─── */
+        const ReconciliationPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const profileTxns = getProfileData(user).transactions.map(function(tx) {
+                return { t: tx.t, v: tx.amt, s: tx.s === 'Matched' ? 'Matched' : 'Unmatched', d: tx.date + ' 2024' };
+            });
+            const [txns, setTxns] = useState(profileTxns.length ? profileTxns : [
+                { t: 'Invoice Payment', v: '+£1,250.00', s: 'Unmatched', d: '22 Apr 2024' },
+                { t: 'AWS Cloud', v: '-£84.50', s: 'Unmatched', d: '21 Apr 2024' },
+            ]);
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center">
+                            <div><h2 className="text-3xl font-bold">Bank Reconciliation</h2><p className="text-slate-500">Match transactions with your records.</p></div>
+                            <button onClick={() => { setTxns(t => t.map(x => ({...x, s:'Matched'}))); toast('All transactions matched!','success'); }} className="bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary-dark">
+                                <span className="material-symbols-outlined mr-1 text-lg align-middle">done_all</span> Auto-Match All
+                            </button>
+                        </div>
+                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                            <table className="w-full text-left">
+                                <thead className="bg-slate-50"><tr>{['Transaction','Date','Amount','Status','Action'].map(h => <th key={h} className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{h}</th>)}</tr></thead>
+                                <tbody className="divide-y divide-slate-100">
+                                    {txns.map((tr, i) => (
+                                        <tr key={i} className="hover:bg-slate-50">
+                                            <td className="px-6 py-4 font-semibold">{tr.t}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-500">{tr.d}</td>
+                                            <td className={`px-6 py-4 font-bold ${tr.v.startsWith('+') ? 'text-emerald-600' : 'text-red-600'}`}>{tr.v}</td>
+                                            <td className="px-6 py-4"><span className={`px-3 py-1 rounded-full text-xs font-bold ${tr.s==='Matched'?'bg-emerald-100 text-emerald-700':'bg-slate-100 text-slate-600'}`}>{tr.s}</span></td>
+                                            <td className="px-6 py-4">
+                                                {tr.s !== 'Matched' && <button onClick={() => { setTxns(ts => ts.map((x,j) => j===i?{...x,s:'Matched'}:x)); toast('Matched: '+tr.t,'success'); }} className="text-xs text-emerald-600 hover:underline">Match</button>}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Statements Page ─── */
+        const StatementsPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const [generated, setGenerated] = useState({});
+            const reports = ['Balance Sheet', 'Profit & Loss', 'Cash Flow', 'Trial Balance'];
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    <div className="space-y-8">
+                        <h2 className="text-3xl font-bold">Financial Statements</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {reports.map(name => (
+                                <div key={name} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <span className="material-symbols-outlined text-primary text-3xl mb-3 block">description</span>
+                                        <h3 className="text-lg font-bold mb-1">{name}</h3>
+                                        <p className="text-xs text-slate-500 mb-4">{generated[name] ? 'Generated ' + generated[name] : 'Not yet generated'}</p>
+                                    </div>
+                                    <button onClick={() => { const d = new Date().toLocaleDateString(); setGenerated(g=>({...g,[name]:d})); toast(name + ' generated for ' + d,'success'); }} className="w-full bg-primary text-white py-2.5 rounded-lg font-bold hover:bg-primary-dark text-sm">
+                                        Generate Report
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                        {Object.keys(generated).length > 0 && (
+                            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                <h3 className="font-bold mb-4">Generated Reports</h3>
+                                <div className="space-y-2">
+                                    {Object.entries(generated).map(([name, date]) => (
+                                        <div key={name} className="flex justify-between items-center py-2 border-b border-slate-100">
+                                            <span className="font-semibold text-sm">{name}</span>
+                                            <div className="flex items-center gap-3">
+                                                <span className="text-xs text-slate-500">{date}</span>
+                                                <button onClick={() => toast('Downloading ' + name + '...','info')} className="text-xs text-primary hover:underline">Download PDF</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Tax Page ─── */
+        const TaxPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const [filings, setFilings] = useState([
+                { name: 'VAT Return Q3', due: 'Nov 7, 2024', status: 'Filed', type: 'VAT' },
+                { name: 'Corporation Tax', due: 'Dec 31, 2024', status: 'Pending', type: 'Corp' },
+                { name: 'PAYE Monthly', due: 'Nov 19, 2024', status: 'Pending', type: 'PAYE' },
+            ]);
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center">
+                            <div><h2 className="text-3xl font-bold">Tax & Compliance</h2><p className="text-slate-500">Manage statutory filings.</p></div>
+                            <button onClick={() => toast('Tax advisor connected — response within 24h','info')} className="bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary-dark">
+                                <span className="material-symbols-outlined mr-1 text-lg align-middle">support_agent</span> Contact Tax Advisor
+                            </button>
+                        </div>
+                        <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm flex items-center gap-8 mb-4">
+                            <div className="flex-1"><h3 className="text-2xl font-bold text-emerald-600 mb-2">Fully Compliant</h3><p className="text-slate-500">All statutory requirements met for Q3.</p></div>
+                            <div className="text-center"><p className="text-3xl font-bold text-primary">100%</p><p className="text-xs font-bold text-slate-500 uppercase">On-time Filings</p></div>
+                        </div>
+                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                            <table className="w-full text-left">
+                                <thead className="bg-slate-50"><tr>{['Filing','Due Date','Type','Status','Action'].map(h => <th key={h} className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{h}</th>)}</tr></thead>
+                                <tbody className="divide-y divide-slate-100">
+                                    {filings.map((f, i) => (
+                                        <tr key={i} className="hover:bg-slate-50">
+                                            <td className="px-6 py-4 font-semibold">{f.name}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-500">{f.due}</td>
+                                            <td className="px-6 py-4"><span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-bold">{f.type}</span></td>
+                                            <td className="px-6 py-4"><span className={`px-3 py-1 rounded-full text-xs font-bold ${f.status==='Filed'?'bg-emerald-100 text-emerald-700':'bg-amber-100 text-amber-700'}`}>{f.status}</span></td>
+                                            <td className="px-6 py-4">
+                                                {f.status === 'Pending' && <button onClick={() => { setFilings(fs => fs.map((x,j) => j===i?{...x,status:'Filed'}:x)); toast(f.name + ' filed successfully','success'); }} className="text-xs text-emerald-600 hover:underline">Mark Filed</button>}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Uploads Page ─── */
+        const UploadsPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const fileRef = useRef(null);
+            const [files, setFiles] = useState([
+                { name: 'Invoice_Q3_2024.pdf', folder: 'Invoices', size: '142 KB', date: 'Oct 20, 2024' },
+                { name: 'Receipt_AWS_Oct.pdf', folder: 'Receipts', size: '38 KB', date: 'Oct 19, 2024' },
+                { name: 'Bank_Statement_Sep.csv', folder: 'Bank Statements', size: '89 KB', date: 'Sep 30, 2024' },
+            ]);
+            const [folder, setFolder] = useState('Invoices');
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    <input ref={fileRef} type="file" multiple style={{display:'none'}} onChange={e => {
+                        const added = Array.from(e.target.files).map(f => ({ name: f.name, folder, size: (f.size/1024).toFixed(0)+' KB', date: new Date().toLocaleDateString('en-GB',{month:'short',day:'numeric',year:'numeric'}) }));
+                        setFiles(fs => [...fs, ...added]);
+                        toast(added.length + ' file(s) uploaded to ' + folder,'success');
+                        fileRef.current.value = '';
+                    }} />
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center">
+                            <div><h2 className="text-3xl font-bold">Uploads & Documents</h2><p className="text-slate-500">Manage your documents.</p></div>
+                            <div className="flex items-center gap-3">
+                                <select value={folder} onChange={e => setFolder(e.target.value)} className="border border-slate-200 rounded-lg px-3 py-2.5 text-sm outline-none">
+                                    {['Invoices','Receipts','Bank Statements','Tax Returns'].map(f=><option key={f}>{f}</option>)}
+                                </select>
+                                <button onClick={() => fileRef.current.click()} className="bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary-dark">
+                                    <span className="material-symbols-outlined mr-1 text-lg align-middle">upload</span> Upload File
+                                </button>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                            {['Invoices','Receipts','Bank Statements','Tax Returns'].map(f => (
+                                <div key={f} onClick={() => setFolder(f)} className={`bg-white p-6 rounded-xl border-2 shadow-sm cursor-pointer transition-all ${folder===f?'border-primary':'border-slate-200 hover:shadow-md'}`}>
+                                    <span className="material-symbols-outlined text-primary text-4xl mb-3 block" style={{fontVariationSettings:"'FILL' 1"}}>folder</span>
+                                    <h3 className="font-bold text-sm">{f}</h3>
+                                    <p className="text-xs text-slate-500">{files.filter(x=>x.folder===f).length} files</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                            <table className="w-full text-left">
+                                <thead className="bg-slate-50"><tr>{['File Name','Folder','Size','Date','Action'].map(h => <th key={h} className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{h}</th>)}</tr></thead>
+                                <tbody className="divide-y divide-slate-100">
+                                    {files.map((f, i) => (
+                                        <tr key={i} className="hover:bg-slate-50">
+                                            <td className="px-6 py-4 font-semibold text-sm flex items-center gap-2"><span className="material-symbols-outlined text-slate-400 text-lg">description</span>{f.name}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-500">{f.folder}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-500">{f.size}</td>
+                                            <td className="px-6 py-4 text-sm text-slate-500">{f.date}</td>
+                                            <td className="px-6 py-4">
+                                                <button onClick={() => toast('Downloading ' + f.name,'info')} className="text-xs text-primary hover:underline mr-2">Download</button>
+                                                <button onClick={() => { setFiles(fs => fs.filter((_,j) => j!==i)); toast('File deleted: '+f.name,'warn'); }} className="text-xs text-red-500 hover:underline">Delete</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Reports Page ─── */
+        const ReportsPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const [launched, setLaunched] = useState(false);
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    <div className="space-y-8">
+                        <h2 className="text-3xl font-bold">Reports Dashboard</h2>
+                        <div className="bg-primary p-8 rounded-2xl text-white relative overflow-hidden">
+                            <h3 className="text-2xl font-bold mb-4">AI Cash Flow Forecasting</h3>
+                            <p className="max-w-md opacity-90 mb-6">Predict your financial future with 94% accuracy using our updated machine learning model.</p>
+                            <button onClick={() => { setLaunched(true); toast('AI Analytics launched — processing 6 months of data...','info'); }} className="bg-white text-primary px-6 py-3 rounded-lg font-bold hover:shadow-lg">
+                                Launch Analytics
+                            </button>
+                        </div>
+                        {launched && (
+                            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                <h3 className="font-bold mb-4">AI Forecast — Next 6 Months</h3>
+                                <div className="h-40 flex items-end justify-between gap-2 border-b border-slate-100 mb-4">
+                                    {[85,92,78,105,115,122].map((h,i) => (
+                                        <div key={i} className="flex flex-col items-center gap-1 flex-1">
+                                            <div className="w-full rounded-t" style={{height:h,background:`hsl(${140+i*8},60%,50%)`}}></div>
+                                            <span className="text-[10px] text-slate-400">M{i+1}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <p className="text-sm text-slate-500">Projected net cash inflow: <span className="font-bold text-emerald-600">+£14,820</span> over 6 months (confidence: 94%)</p>
+                            </div>
+                        )}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {['Monthly P&L','Client Revenue','Expense Breakdown'].map(r => (
+                                <div key={r} className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                    <span className="material-symbols-outlined text-primary text-2xl mb-2 block">analytics</span>
+                                    <h3 className="font-bold mb-1">{r}</h3>
+                                    <p className="text-xs text-slate-500 mb-4">Standard report</p>
+                                    <button onClick={() => toast('Generating ' + r + '...','info')} className="w-full py-2 border border-primary text-primary rounded-lg font-bold text-sm hover:bg-primary hover:text-white transition-colors">Generate</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Settings Page ─── */
+        const SettingsPage = ({ user, onLogout }) => {
+            const toast = useToast();
+            const [settings, setSettings] = useState({ businessName: 'EBSPL Cloud Services', fiscalYear: 'July', currency: 'GBP', timezone: 'Europe/London' });
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    <div className="space-y-8 max-w-4xl">
+                        <h2 className="text-3xl font-bold">Organization Settings</h2>
+                        <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm space-y-8">
+                            <div className="flex items-center gap-6 pb-6 border-b border-slate-100">
+                                <div className="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center text-primary font-bold text-2xl">
+                                    {(user && user.initial) || '?'}
+                                </div>
+                                <div>
+                                    <p className="font-bold text-lg">{user && user.name}</p>
+                                    <p className="text-slate-500 text-sm">{user && user.email}</p>
+                                    <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-bold">{user && user.role}</span>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-8">
+                                {[['Business Name','businessName','text'],['Fiscal Year Start','fiscalYear','text'],['Currency','currency','text'],['Timezone','timezone','text']].map(([label,key,type]) => (
+                                    <div key={key} className="space-y-2">
+                                        <label className="block text-sm font-bold text-slate-500 uppercase">{label}</label>
+                                        <input type={type} value={settings[key]} onChange={e => setSettings(s=>({...s,[key]:e.target.value}))} className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-primary/30" />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex justify-end gap-4 pt-6 border-t border-slate-100">
+                                <button onClick={() => toast('Changes discarded','warn')} className="px-6 py-2.5 rounded-lg border border-primary text-primary font-bold text-sm">Discard</button>
+                                <button onClick={() => toast('Settings saved successfully','success')} className="px-8 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:bg-primary-dark">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Chat Page ─── */
+        const ChatPage = ({ user, onLogout }) => {
+            const [messages, setMessages] = useState([
+                { from: 'agent', text: 'Hello ' + ((user && user.name) ? user.name.split(' ')[0] : 'there') + '! How can I help you today?' },
+            ]);
+            const [input, setInput] = useState('');
+            const bottomRef = useRef(null);
+            const agentReplies = ['I\'ll look into that for you right away!','Let me check your account details.','That\'s a great question — give me a moment.','I\'ve raised a support ticket for this issue.','Your query has been escalated to our specialist team.'];
+            useEffect(() => { if (bottomRef.current) bottomRef.current.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
+            const send = () => {
+                if (!input.trim()) return;
+                const userMsg = input.trim();
+                setMessages(m => [...m, { from: 'user', text: userMsg }]);
+                setInput('');
+                setTimeout(() => { setMessages(m => [...m, { from: 'agent', text: agentReplies[Math.floor(Math.random()*agentReplies.length)] }]); }, 900);
+            };
+            return (
+                <Layout user={user} onLogout={onLogout}>
+                    <div className="flex gap-8 h-[calc(100vh-12rem)]">
+                        <div className="w-72 bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col">
+                            <div className="p-4 bg-slate-50 border-b border-slate-200"><h3 className="font-bold">Conversations</h3></div>
+                            <div className="flex-1 overflow-y-auto">
+                                <div className="p-4 bg-primary/5 border-l-4 border-primary"><p className="text-sm font-bold text-primary">Support #3924</p><p className="text-xs text-slate-500 truncate">Bank Feed Disconnect Error</p></div>
+                                <div className="p-4 hover:bg-slate-50 cursor-pointer"><p className="text-sm font-bold">Ticket #3811</p><p className="text-xs text-slate-500 truncate">Invoice template query</p></div>
+                            </div>
+                        </div>
+                        <div className="flex-1 bg-white rounded-xl border border-slate-200 flex flex-col overflow-hidden">
+                            <header className="p-4 border-b border-slate-200 flex items-center gap-4">
+                                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center font-bold text-emerald-700">SA</div>
+                                <div><p className="font-bold">EBSPL Support</p><p className="text-xs text-emerald-500">● Online</p></div>
+                            </header>
+                            <div className="flex-1 p-6 space-y-4 overflow-y-auto bg-slate-50">
+                                {messages.map((m, i) => (
+                                    <div key={i} className={`max-w-[75%] ${m.from === 'user' ? 'ml-auto' : ''}`}>
+                                        <div className={`p-4 rounded-2xl shadow-sm text-sm ${m.from === 'user' ? 'bg-primary text-white' : 'bg-white'}`}>{m.text}</div>
+                                    </div>
+                                ))}
+                                <div ref={bottomRef} />
+                            </div>
+                            <footer className="p-4 border-t border-slate-200">
+                                <div className="flex gap-2 bg-slate-100 p-2 rounded-lg">
+                                    <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} className="flex-1 bg-transparent border-none focus:ring-0 text-sm outline-none" placeholder="Type a message..." />
+                                    <button onClick={send} className="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm">Send</button>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </Layout>
+            );
+        };
+
+        /* ─── Login Page ─── */
+        const LoginPage = ({ onLogin }) => {
+            const [role, setRole] = useState('Client');
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+            const [loading, setLoading] = useState(false);
+
+            const nameFromEmail = (e) => {
+                const local = (e || '').split('@')[0].replace(/[._\-+]/g, ' ');
+                return local.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ').trim() || 'User';
+            };
+
+            const doLogin = (userObj) => {
+                setLoading(true);
+                saveUser(userObj);
+                setTimeout(() => { onLogin(userObj); setLoading(false); }, 700);
+            };
+
+            const handleSignIn = () => {
+                if (!email || !email.trim()) {
+                    alert('Please enter your email address.');
+                    return;
+                }
+                const trimmedEmail = email.trim();
+                const name = nameFromEmail(trimmedEmail);
+                const initial = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+                doLogin({ name, email: trimmedEmail, role, initial, loginMethod: 'password' });
+            };
+
+            const handleGoogle = () => {
+                /* Build profile list from profiles.js (14 users grouped by role) */
+                var profiles = (window.EBSPL_PROFILES && window.EBSPL_PROFILES.all) || [];
+                var roleOrder = ['Admin','Accountant','Client','User'];
+                var byRole = {};
+                profiles.forEach(function(p) { if(!byRole[p.role]) byRole[p.role]=[]; byRole[p.role].push(p); });
+                var rows = '';
+                roleOrder.forEach(function(role) {
+                    if(!byRole[role]) return;
+                    rows += '<div style="padding:6px 12px 2px;font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;">'+role+'</div>';
+                    byRole[role].forEach(function(p) {
+                        var init = p.initial || p.name.split(' ').map(function(w){return w[0];}).join('').toUpperCase().slice(0,2);
+                        var color = p.avatarColor || '#4285f4';
+                        rows += '<div data-pemail="'+p.email+'" class="gp-row" style="display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;" onmouseover="this.style.background=\'#f8fafc\'" onmouseout="this.style.background=\'transparent\'">' +
+                            '<div style="width:36px;height:36px;border-radius:50%;background:'+color+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">'+init+'</div>' +
+                            '<div style="flex:1;min-width:0;"><div style="font-weight:600;font-size:14px;">'+p.name+'</div><div style="font-size:12px;color:#64748b;overflow:hidden;text-overflow:ellipsis;">'+p.email+'</div></div>' +
+                            '<span style="font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;padding:2px 8px;border-radius:20px;flex-shrink:0;">'+p.role+'</span></div>';
+                    });
+                });
+                if(!rows) {
+                    /* Fallback if profiles.js not loaded */
+                    [['Priya Sharma','priya.sharma@gmail.com','Client','PS','#4285f4'],
+                     ['James Okonkwo','j.okonkwo@gmail.com','Client','JO','#34a853'],
+                     ['Sarah Chen','s.chen@gmail.com','Admin','SC','#7b1fa2']].forEach(function(u) {
+                        rows += '<div data-pemail="'+u[1]+'" data-pname="'+u[0]+'" data-prole="'+u[2]+'" data-pinit="'+u[3]+'" class="gp-row" style="display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;" onmouseover="this.style.background=\'#f8fafc\'" onmouseout="this.style.background=\'transparent\'">' +
+                            '<div style="width:36px;height:36px;border-radius:50%;background:'+u[4]+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">'+u[3]+'</div>' +
+                            '<div><div style="font-weight:600;font-size:14px;">'+u[0]+'</div><div style="font-size:12px;color:#64748b;">'+u[1]+'</div></div>' +
+                            '<span style="font-size:10px;font-weight:700;background:#f1f5f9;color:#475569;padding:2px 8px;border-radius:20px;">'+u[2]+'</span></div>';
+                    });
+                }
+                var overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;';
+                overlay.innerHTML = '<div style="background:#fff;border-radius:16px;max-width:400px;width:92%;box-shadow:0 24px 64px rgba(0,0,0,.25);overflow:hidden;">' +
+                    '<div style="display:flex;align-items:center;gap:10px;padding:20px 16px 12px;border-bottom:1px solid #f1f5f9;">' +
+                    '<img src="https://www.google.com/favicon.ico" style="width:18px;height:18px;" onerror="this.style.display=\'none\'" alt="G"><h2 style="font-size:16px;font-weight:700;margin:0;">Choose a Google account</h2></div>' +
+                    '<div style="max-height:380px;overflow-y:auto;">'+rows+'</div>' +
+                    '<div style="padding:12px 16px;border-top:1px solid #f1f5f9;"><button onclick="this.closest(\'[style*=\\\"position:fixed\\\"]\').remove()" style="width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;background:#fff;">Cancel</button></div></div>';
+                document.body.appendChild(overlay);
+                overlay.querySelectorAll('.gp-row').forEach(function(row) {
+                    row.addEventListener('click', function() {
+                        var email = row.getAttribute('data-pemail');
+                        var prof = window.EBSPL_PROFILES && window.EBSPL_PROFILES.getByEmail(email);
+                        var name = prof ? prof.name : (row.getAttribute('data-pname') || email);
+                        var role = prof ? prof.role : (row.getAttribute('data-prole') || 'Client');
+                        var init = prof ? (prof.initial || name.split(' ').map(function(w){return w[0];}).join('').toUpperCase().slice(0,2)) : (row.getAttribute('data-pinit') || 'GU');
+                        var company = prof ? prof.company : '';
+                        var userObj = { name: name, email: email, role: role, initial: init, loginMethod: 'google' };
+                        if(company) userObj.company = company;
+                        overlay.remove();
+                        doLogin(userObj);
+                    });
+                });
+                overlay.addEventListener('click', function(e) { if(e.target === overlay) overlay.remove(); });
+            };
+
+            const handleSSO = () => {
+                var overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;';
+                overlay.innerHTML = '<div style="background:#fff;border-radius:16px;padding:28px;max-width:360px;width:92%;box-shadow:0 24px 60px rgba(0,0,0,.22);">' +
+                    '<h2 style="font-size:17px;font-weight:700;margin:0 0 6px;">Single Sign-On</h2>' +
+                    '<p style="font-size:13px;color:#64748b;margin:0 0 20px;">Enter your company domain to continue.</p>' +
+                    '<input id="sso-ed" type="text" placeholder="company.com" style="width:100%;padding:12px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;outline:none;box-sizing:border-box;">' +
+                    '<button id="sso-eg" style="margin-top:12px;width:100%;padding:12px;background:#ec5b13;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;">Continue with SSO</button>' +
+                    '<button onclick="this.closest(\'[style*=\\\"position:fixed\\\"]\').remove()" style="margin-top:8px;width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;background:#fff;">Cancel</button></div>';
+                document.body.appendChild(overlay);
+                overlay.querySelector('#sso-eg').addEventListener('click', function() {
+                    var domain = overlay.querySelector('#sso-ed').value.trim() || 'company.com';
+                    overlay.remove();
+                    doLogin({ name: 'SSO User', email: 'sso@'+domain, role: 'Admin', initial: 'SU', loginMethod: 'sso', domain: domain });
+                });
+                overlay.addEventListener('click', function(e) { if(e.target === overlay) overlay.remove(); });
+            };
+
+            return (
+                <div className="min-h-screen bg-[#FAFBFF] flex items-center justify-center p-8">
+                    <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 border border-slate-200">
+                        <div className="bg-primary p-12 text-white flex flex-col justify-between">
+                            <div>
+                                <h1 className="text-4xl font-bold mb-4">Manage your financial future with clarity.</h1>
+                                <p className="opacity-80">Access the industry's most trusted cloud accounting platform.</p>
+                            </div>
+                            <div className="space-y-4 mt-8">
+                                <div className="p-4 bg-white/10 rounded-lg"><span className="material-symbols-outlined text-emerald-400 mb-2 block">security</span><h3 className="font-bold text-sm">Encrypted Security</h3><p className="text-[10px] opacity-70">Bank-grade 256-bit protection.</p></div>
+                                <div className="p-4 bg-white/10 rounded-lg"><span className="material-symbols-outlined text-blue-300 mb-2 block">speed</span><h3 className="font-bold text-sm">Real-time Insights</h3><p className="text-[10px] opacity-70">Automated reconciliation and instant reporting.</p></div>
+                            </div>
+                        </div>
+                        <div className="p-12">
+                            <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
+                            <p className="text-slate-500 mb-8">Enter your credentials to continue.</p>
+                            <div className="space-y-5">
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase">Login As</label>
+                                    <div className="grid grid-cols-4 gap-2">
+                                        {['Client','Admin','Accountant','User'].map(r => (
+                                            <button key={r} type="button" onClick={() => setRole(r)} className={`py-2 rounded-lg text-[10px] font-bold border transition-all ${role === r ? 'bg-primary text-white border-primary' : 'bg-white text-slate-500 border-slate-200 hover:border-primary/30'}`}>{r}</button>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Email</label>
+                                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="john@company.com" className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-primary/20 text-sm" />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Password</label>
+                                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSignIn()} placeholder="••••••••" className="w-full p-3 bg-slate-50 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-primary/20 text-sm" />
+                                </div>
+                                <button onClick={handleSignIn} disabled={loading} className="w-full py-4 bg-primary text-white rounded-lg font-bold text-lg hover:bg-primary-dark transition-all shadow-lg disabled:opacity-70">
+                                    {loading ? 'Signing in...' : 'Sign In'}
+                                </button>
+                                <div className="flex items-center gap-3">
+                                    <div className="flex-grow h-px bg-slate-200"></div>
+                                    <span className="text-xs text-slate-400 font-bold uppercase">or</span>
+                                    <div className="flex-grow h-px bg-slate-200"></div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button type="button" onClick={handleGoogle} className="flex items-center justify-center gap-2 py-3 border border-slate-200 rounded-lg font-bold text-sm hover:bg-slate-50 transition-colors">
+                                        <img src="https://www.google.com/favicon.ico" className="w-4 h-4" onerror="this.style.display='none'" alt="G" /> Google
+                                    </button>
+                                    <button type="button" onClick={handleSSO} className="flex items-center justify-center gap-2 py-3 border border-slate-200 rounded-lg font-bold text-sm hover:bg-slate-50 transition-colors">
+                                        <span className="material-symbols-outlined text-lg">business</span> SSO
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        /* ─── Error Boundary ─── */
+        class ErrorBoundary extends React.Component {
+            constructor(props) { super(props); this.state = { err: null }; }
+            static getDerivedStateFromError(err) { return { err: err }; }
+            componentDidCatch(err, info) { console.error('EBSPL ErrorBoundary:', err, info); }
+            render() {
+                if (this.state.err) {
+                    return (
+                        <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#f1fbff',fontFamily:'Inter,sans-serif'}}>
+                            <div style={{background:'#fff',borderRadius:16,padding:40,maxWidth:480,width:'90%',boxShadow:'0 8px 40px rgba(0,0,0,.1)',textAlign:'center'}}>
+                                <span style={{fontSize:48}}>⚠️</span>
+                                <h2 style={{fontWeight:700,fontSize:20,margin:'16px 0 8px'}}>Something went wrong</h2>
+                                <p style={{color:'#64748b',fontSize:14,marginBottom:24}}>{String(this.state.err)}</p>
+                                <button onClick={() => { localStorage.removeItem('ebspl_user'); window.location.reload(); }} style={{background:'#ec5b13',color:'#fff',border:'none',borderRadius:8,padding:'12px 24px',fontWeight:700,fontSize:14,cursor:'pointer'}}>Clear session &amp; reload</button>
+                            </div>
+                        </div>
+                    );
+                }
+                return this.props.children;
+            }
+        }
+
+        /* ─── App ─── */
+        const App = () => {
+            const [user, setUser] = useState(() => getStoredUser());
+
+            const handleLogin = (u) => { setUser(u); };
+            const handleLogout = () => { clearUser(); window.location.href = '/'; };
+
+            if (!user) return (
+                <ToastProvider>
+                    <MemoryRouter>
+                        <LoginPage onLogin={handleLogin} />
+                    </MemoryRouter>
+                </ToastProvider>
+            );
+
+            return (
+                <ToastProvider>
+                    <MemoryRouter>
+                        <Routes>
+                            <Route path="/" element={<DashboardPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/clients" element={<ClientsPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/invoicing" element={<InvoicingPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/expenses" element={<ExpensesPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/reconciliation" element={<ReconciliationPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/statements" element={<StatementsPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/tax" element={<TaxPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/uploads" element={<UploadsPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/reports" element={<ReportsPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/settings" element={<SettingsPage user={user} onLogout={handleLogout} />} />
+                            <Route path="/chat" element={<ChatPage user={user} onLogout={handleLogout} />} />
+                        </Routes>
+                    </MemoryRouter>
+                </ToastProvider>
+            );
+        };
+
+        createRoot(document.getElementById('root')).render(<ErrorBoundary><App /></ErrorBoundary>);
+    </script>
+</body>
+</html>

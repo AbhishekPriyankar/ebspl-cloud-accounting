@@ -1,0 +1,16 @@
+[
+  { "name": "Priya Sharma", "email": "priya.sharma@gmail.com", "role": "Client", "initial": "PS", "company": "Sharma Textiles Ltd" },
+  { "name": "James Okonkwo", "email": "j.okonkwo@gmail.com", "role": "Client", "initial": "JO", "company": "Okonkwo Logistics" },
+  { "name": "Sophie Williams", "email": "s.williams@brightretail.com", "role": "Client", "initial": "SW", "company": "Bright Retail Ltd" },
+  { "name": "David Chen", "email": "d.chen@novasystems.io", "role": "Client", "initial": "DC", "company": "Nova Systems" },
+  { "name": "Alex Henderson", "email": "alex@henderson.io", "role": "Client", "initial": "AH", "company": "Henderson & Co." },
+  { "name": "Emma Rodriguez", "email": "e.rodriguez@ebspl.com", "role": "Accountant", "initial": "ER", "company": "EBSPL" },
+  { "name": "Liam Thompson", "email": "l.thompson@ebspl.com", "role": "Accountant", "initial": "LT", "company": "EBSPL" },
+  { "name": "Aisha Patel", "email": "a.patel@ebspl.com", "role": "Accountant", "initial": "AP", "company": "EBSPL" },
+  { "name": "Sarah Chen", "email": "s.chen@gmail.com", "role": "Admin", "initial": "SC", "company": "EBSPL" },
+  { "name": "Marcus Reed", "email": "m.reed@ebspl.com", "role": "Admin", "initial": "MR", "company": "EBSPL" },
+  { "name": "Rachel Kim", "email": "r.kim@ebspl.com", "role": "Admin", "initial": "RK", "company": "EBSPL" },
+  { "name": "Tom Bradley", "email": "t.bradley@ebspl.com", "role": "User", "initial": "TB", "company": "EBSPL" },
+  { "name": "Kezia Obi", "email": "k.obi@ebspl.com", "role": "User", "initial": "KO", "company": "EBSPL" },
+  { "name": "Daniel Foster", "email": "d.foster@ebspl.com", "role": "User", "initial": "DF", "company": "EBSPL" }
+]

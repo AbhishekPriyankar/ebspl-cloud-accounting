@@ -6,9 +6,10 @@ import { signIn } from "next-auth/react";
 
 const ROLES = [
   { key: "Client", icon: "person" },
-  { key: "Admin", icon: "admin_panel_settings" },
+  // Hidden for now — uncomment these (and set grid-cols-4 below) to restore:
+  // { key: "Admin", icon: "admin_panel_settings" },
   { key: "Accountant", icon: "calculate" },
-  { key: "User", icon: "groups" },
+  // { key: "User", icon: "groups" },
 ];
 const ROLE_ORDER = ["Admin", "Accountant", "Client", "User"];
 
@@ -128,7 +129,7 @@ export default function LoginClient({ mockMode, mockProfiles = [] }) {
             {/* Role Selector */}
             <div className="mb-stack-lg">
               <label className="block font-label-bold text-label-bold text-on-surface-variant mb-stack-sm">LOGIN AS</label>
-              <div className="grid grid-cols-4 gap-stack-sm">
+              <div className="grid grid-cols-2 gap-stack-sm">
                 {ROLES.map((r) => {
                   const active = role === r.key;
                   return (
